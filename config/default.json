@@ -1,0 +1,6 @@
+{
+    "mongoURI": "mongodb+srv://tiger:tiger@mongoconnector.glmey.mongodb.net/MongoConnector?retryWrites=true&w=majority",
+    "jwtSecret": "jwtToken",
+    "githubClientId": "19c086870cf60d813bb9",
+    "githubSecret": "60deb529a9d6dcf0263a81dde05737ff1894f90a"
+}
