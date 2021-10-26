@@ -33,7 +33,7 @@ router.post('/',
     check('major', 'Major is required').notEmpty(),
     check('location', 'Location is required').notEmpty(),
     check('skills', 'Skill is required').notEmpty(),
-    check('hobbies', 'Hobbby is required').notEmpty(),  
+    check('hobbies', 'Hobby is required').notEmpty(),  
     async (req, res) =>{
         const errors = validationResult(req);
      

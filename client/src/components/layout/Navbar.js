@@ -9,15 +9,18 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to="/profile">Profile</Link>
-      </li>
-      <li>
-        <Link to="/event">Event</Link>
-      </li>
-      <li>
         <Link to="/dashboard">
-          <i className="fas fa-user" />{' '}
-          <span className="hide-sm">Dashboard</span>
+          <i class="fa fa-home"></i> <span className="hide-sm">Dashboard</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/profile">
+          <i className="fas fa-user" /> Profile
+        </Link>
+      </li>
+      <li>
+        <Link to="/event">
+          <i class="fa fa-calendar-alt" /> Events
         </Link>
       </li>
       <li>
@@ -32,7 +35,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/profile">Profile</Link>
+        <Link to="/about-us">About Us</Link>
       </li>
       <li>
         <Link to="/register">Register</Link>
@@ -47,7 +50,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
     <nav className="navbar bg-logo">
       <h1>
         <Link to="/">
-          <img className="logo" src={logo}/> Spartan MeetUp
+          <img className="logo" src={logo} alt="spartanlogo" /> Spartan MeetUp
         </Link>
       </h1>
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
@@ -57,11 +60,11 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

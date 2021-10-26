@@ -1,6 +1,7 @@
 /* Global Styles */
 :root {
-  --primary-color: #173db8;
+  --primary-color: #0055a2;
+  --hover-nav-color: #f7ca18;
   --dark-color: #343a40;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
@@ -70,7 +71,7 @@ img {
   text-align: center;
 }
 
-.text-primary {
+.text-normal {
   color: var(--primary-color);
 }
 
@@ -155,9 +156,9 @@ img {
 .alert {
   padding: 0.8rem;
   margin: 1rem 0;
-  opacity: 0.9;
+  opacity: 0.8;
   background: var(--light-color);
-  color: #333;
+  color: var(--dark-color);
 }
 
 .bg-logo{
@@ -328,16 +329,18 @@ button {
 .navbar ul li a {
   font-size: 20px;  
 }
+
 .navbar a {
   color: var(--primary-color);
-  padding: 0.45rem;
-  margin: 0 0.25rem;
+  padding: 0.25rem;
+  margin: 0 0.5rem;
   text-decoration: none;
   font-size: 22px;
 }
 
 .navbar a:hover {
-  color: var(--primary-color);
+  color: var(--hover-nav-color);
+  border-bottom: 1px solid var(--hover-nav-color);
 }
 
 .navbar .welcome span {

@@ -26,7 +26,7 @@ const Login = ({login, isAuthenticated}) => {
     return (
         <Fragment>
         <section className="container">
-          <h1 className="large text-primary">Sign In</h1>
+          <h1 className="large text-normal">Sign In</h1>
           <p className="lead"> Sign Into Your Account</p>
           <form className="form" onSubmit={e => onSubmit(e)}>
 
