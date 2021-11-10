@@ -1,25 +1,48 @@
-import React, { Fragment, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createProfile } from '../../actions/profile';
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createProfile, getCurrentProfile } from "../../actions/profile";
 
-const EditProfile = ({ createProfile, history }) => {
+const EditProfile = ({
+  createProfile,
+  profile: { profile, loading },
+  getCurrentProfile,
+  history,
+}) => {
   const [formData, setFormData] = useState({
-    name: '',
-    major: '',
-    yearInSchool: '',
-    email: '',
-    phone: '',
-    location: '',
-    skills: '',
-    hobbies: '',
-    facebook: '',
-    twitter: '',
-    instagram: '',
-    linkedin: '',
+    name: "",
+    major: "",
+    yearInSchool: "",
+    email: "",
+    phone: "",
+    location: "",
+    skills: "",
+    hobbies: "",
+    facebook: "",
+    twitter: "",
+    instagram: "",
+    linkedin: "",
   });
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+
+  useEffect(() => {
+    getCurrentProfile();
+    setFormData({
+      name: loading || !profile.name ? "" : profile.name,
+      major: loading || !profile.major ? "" : profile.name,
+      yearInSchool:
+        loading || !profile.yearInSchool ? "" : profile.yearInSchool,
+      email: loading || !profile.email ? "" : profile.email,
+      phone: loading || !profile.phone ? "" : profile.phone,
+      location: loading || !profile.location ? "" : profile.location,
+      skills: loading || !profile.skills ? "" : profile.skills.join(","),
+      hobbies: loading || !profile.hobbies ? "" : profile.hobbies.join(","),
+      facebook: loading || !profile.facebook ? "" : profile.facebook,
+      twitter: loading || !profile.twitter ? "" : profile.twitter,
+      instagram: loading || !profile.instagram ? "" : profile.instagram,
+    });
+  }, [loading, getCurrentProfile]);
   const {
     name,
     major,
@@ -48,16 +71,16 @@ const EditProfile = ({ createProfile, history }) => {
           Edit Your Profile
         </h1>
         <p className="lead">
-          <i className="fas fa-user"></i> Let's edit some components of your profile
+          <i className="fas fa-user"></i> Let's edit some components of your
+          profile
         </p>
         <small>* = required field</small>
 
-
         <form className="form" onSubmit={(e) => onSubmit(e)}>
           <div className="form-group">
-          <small className="form-text">
-          Give us an idea of which year you are at school
-        </small>
+            <small className="form-text">
+              Give us an idea of which year you are at school
+            </small>
             <select
               name="yearInSchool"
               value={yearInSchool}
@@ -116,7 +139,8 @@ const EditProfile = ({ createProfile, history }) => {
           </div>
           <div className="form-group">
             <small className="form-text">
-              Please use comma separated values (eg. Programming, Playing Video Games)
+              Please use comma separated values (eg. Programming, Playing Video
+              Games)
             </small>
             <input
               type="text"
@@ -211,4 +235,10 @@ EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createProfile })(withRouter(EditProfile));
+const mapStateToProps = (state) => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+  withRouter(EditProfile)
+);

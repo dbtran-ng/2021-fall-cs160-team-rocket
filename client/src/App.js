@@ -15,6 +15,8 @@ import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import "./App.css";
 import CreateProfile from "./components/profile-form/CreateProfile";
+//new
+import Profile from "./components/profile/Profile";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -25,26 +27,34 @@ const App = () => {
   }, []);
   return (
     <Provider store={store}>
-    <Router>
-      <Fragment>
-        <Navbar />
-        <Route exact path = "/" component ={Landing} />
-        <section>
-          <Alert/>
-          <Switch>
-            <Route exect path="/about-us" component={About} />
-            <Route exact path ='/register' component={Register}/>
-            <Route exact path ='/login' component={Login}/>
-            <PrivateRoute exact path ='/dashboard' component={Dashboard}/>
-            <PrivateRoute exact path ='/create-profile' component={CreateProfile}/>
-            <PrivateRoute exact path ='/edit-profile' component={EditProfile}/>
-          </Switch>
-        </section>
-      </Fragment>  
-    </Router>
-  </Provider>
-  )
-
+      <Router>
+        <Fragment>
+          <Navbar />
+          <Route exact path="/" component={Landing} />
+          <section>
+            <Alert />
+            <Switch>
+              <Route exect path="/about-us" component={About} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute
+                exact
+                path="/create-profile"
+                component={CreateProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/edit-profile"
+                component={EditProfile}
+              />
+              <PrivateRoute exact path="/profile" component={Profile} />
+            </Switch>
+          </section>
+        </Fragment>
+      </Router>
+    </Provider>
+  );
 };
 
 export default App;
