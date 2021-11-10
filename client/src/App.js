@@ -9,13 +9,14 @@ import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
 import EditProfile from "./components/profile-form/EditProfile";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import CreateProfile from "./components/profile-form/CreateProfile";
+import Profile from "./components/profile/Profile";
 import { loadUser } from "./actions/auth";
 import { Provider } from "react-redux";
 import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import "./App.css";
-import CreateProfile from "./components/profile-form/CreateProfile";
-import Profile from "./components/Frofile/Profile";
+
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -46,7 +47,6 @@ const App = () => {
     </Router>
   </Provider>
   )
-
 };
 
 export default App;
