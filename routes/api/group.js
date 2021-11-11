@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
-
 const Event = require("../../models/Event");
 const User = require("../../models/User");
 const Profile = require("../../models/Profile");
-// @route  POST api/event
-// @test   Create a event
+const Group = require("../../models/Group");
+
+// @route  POST api/group
+// @test   Create a group
 // @access Private
 router.post(
   "/",
@@ -15,8 +16,9 @@ router.post(
     auth,
     [
       check("title", "Title is required").not().isEmpty(),
-      check("meetingMethod", "MeetingMethod is required").not().isEmpty(),
+      //check("meetingMethod", "MeetingMethod is required").not().isEmpty(),
       check("description", "Description is required").not().isEmpty(),
+      check("topic", "Topic is required").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -28,77 +30,77 @@ router.post(
     try {
       const user = await User.findById(req.user.id).select("-password");
 
-      const newEvent = new Event({
+      const newGroup = new Group({
         title: req.body.title,
-        meetingMethod: req.body.meetingMethod,
+        topic: req.body.topic,
         description: req.body.description,
-        dateEvent: req.body.date,
+        dateGroup: req.body.date,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id,
       });
-      const event = await newEvent.save();
-      res.json(event);
+      const group = await newGroup.save();
+      res.json(group);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
     }
   }
 );
-// @route  GET api/event
-// @test   GET all events
+// @route  GET api/group
+// @test   GET all groups
 // @access Private
 router.get("/", auth, async (req, res) => {
   try {
-    const events = await Event.find().sort({ date: -1 });
-    res.json(events);
+    const groups = await Group.find().sort({ date: -1 });
+    res.json(groups);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
 
-// @route  GET api/event/:id
-// @test   GET event by eventId
+// @route  GET api/group/:id
+// @test   GET groups by groupId
 // @access PUBLIC
 router.get("/:id", auth, async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const group = await Group.findById(req.params.id);
 
-    if (!event) {
-      return res.status(404).json({ msg: "Event not found" });
+    if (!group) {
+      return res.status(404).json({ msg: "Group not found" });
     }
-    res.json(event);
+    res.json(group);
   } catch (err) {
     console.error(err.message);
     if (err.ind === "ObjectId") {
-      return res.status(404).json({ msg: "Event not found" });
+      return res.status(404).json({ msg: "Group not found" });
     }
     res.status(500).send("Server Error");
   }
 });
 
-// @route  DELETE api/event/:id
-// @test   Delete a event
+// @route  DELETE api/group/:id
+// @test   Delete a group
 // @access Private
 router.delete("/:id", auth, async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
-    if (!event) {
-      return res.status(404).json({ msg: "Event not found" });
+    const group = await Group.findById(req.params.id);
+    if (!group) {
+      return res.status(404).json({ msg: "Group not found" });
     }
 
     // Check User
-    if (event.user.toString() !== req.user.id) {
+    if (group.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User not authorized" });
     }
 
-    await event.remove();
-    res.json({ msg: "event removed" });
+    await group.remove();
+    res.json({ msg: "Group removed" });
   } catch (err) {
     console.error(err.message);
     if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Event not found" });
+      return res.status(404).json({ msg: "Group not found" });
     }
     res.status(500).send("Server Error");
   }

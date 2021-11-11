@@ -1,39 +1,61 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
-    user: {
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users",
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  meetingMethod: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  dateEvent: {
+    type: Date,
+  },
+  comment: [
+    {
+      user: {
         type: Schema.Types.ObjectId,
-        ref: 'users'
-    },
-    title: {
+        ref: "users",
+      },
+      text: {
+        type: Schema.Types.ObjectId,
+        ref: "text",
+      },
+      name: {
         type: String,
-        required: true
-    },
-    meetingMethod: {
+      },
+      avatar: {
         type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    time: {
-        type: String
-    },
-    date: {
-        type: Date
-    },
-    listMembers: [{
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'users'
-        }
-    }],
-    dateCreated: {
+      },
+      dateComment: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+      },
+    },
+  ],
+  listOfMembers: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    },
+  ],
+
+  dateCreated: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-module.exports = Event = mongoose.model('post',EventSchema);
+module.exports = Event = mongoose.model("post", EventSchema);

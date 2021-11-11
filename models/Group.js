@@ -14,13 +14,13 @@ const GroupSchema = new Schema({
     type: String,
     required: true,
   },
-  discription: {
+  description: {
     type: String,
     required: true,
   },
-  location: {
-    type: String,
-    required: true,
+
+  dateGroup: {
+    type: Date,
   },
   listOfMembers: [
     {
@@ -28,6 +28,49 @@ const GroupSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "users",
       },
+    },
+  ],
+
+  dateCreated: {
+    type: Date,
+    default: Date.now,
+  },
+
+  post: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+      text: {
+        type: Schema.Types.ObjectId,
+        ref: "text",
+      },
+      name: {
+        type: String,
+      },
+      avatar: {
+        type: String,
+      },
+      dateGroup: {
+        type: Date,
+        default: Date.now,
+      },
+      comment: [
+        {
+          user: {
+            type: Schema.Types.ObjectId,
+            ref: "users",
+          },
+          text: {
+            type: Schema.Types.ObjectId,
+            ref: "text",
+          },
+          name: {
+            type: String,
+          },
+        },
+      ],
     },
   ],
 });
