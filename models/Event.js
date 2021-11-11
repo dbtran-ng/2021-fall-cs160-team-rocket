@@ -1,61 +1,56 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "users",
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  meetingMethod: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  dateEvent: {
-    type: Date,
-  },
-  comment: [
-    {
-      user: {
+    user: {
         type: Schema.Types.ObjectId,
-        ref: "users",
-      },
-      text: {
-        type: Schema.Types.ObjectId,
-        ref: "text",
-      },
-      name: {
+        ref: 'users'
+    },
+    title: {
         type: String,
-      },
-      avatar: {
+        required: true
+    },
+    meetingMethod: {
         type: String,
-      },
-      dateComment: {
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    dateEvent: {
+        type: Date
+    },
+    listMembers: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'users'
+        }
+    }],
+    comments:[{
+        user:{
+            type: Schema.Types.ObjectId,
+            ref: 'users'
+        },
+        text:{
+            type: String,
+            required: true
+        },
+        name: {
+            type: String
+        },
+        avatar: {
+            type: String
+        },
+        dateComment:{
+            type: Date,
+            default: Date.now
+        }
+    }],
+    dateCreated: {
         type: Date,
-        default: Date.now,
-      },
-    },
-  ],
-  listOfMembers: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users",
-      },
-    },
-  ],
-
-  dateCreated: {
-    type: Date,
-    default: Date.now,
-  },
+        default: Date.now
+    }
 });
 
-module.exports = Event = mongoose.model("post", EventSchema);
+module.exports = Event = mongoose.model('post',EventSchema);

@@ -14,11 +14,10 @@ router.post(
   [
     auth,
     [
-      check("title", "Title is required").not().isEmpty(),
-      check("meetingMethod", "MeetingMethod is required").not().isEmpty(),
-      check("description", "Description is required").not().isEmpty(),
-    ],
-  ],
+        check('title', 'Title is required').not().isEmpty(),
+        check('meetingMethod', 'MeetingMethod is required').not().isEmpty(),
+        check('description', 'Description is required').not().isEmpty(),
+    ]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -60,13 +59,21 @@ router.get("/", auth, async (req, res) => {
 
 // @route  GET api/event/:id
 // @test   GET event by eventId
-// @access PUBLIC
-router.get("/:id", auth, async (req, res) => {
-  try {
-    const event = await Event.findById(req.params.id);
-
-    if (!event) {
-      return res.status(404).json({ msg: "Event not found" });
+// @access Private
+router.get('/:id', auth, async (req,res) => {
+    try{
+        const event = await Event.findById(req.params.id);
+        
+        if( !event ){
+            return res.status(404).json({msg:'Event not found'});
+        }
+        res.json(event);
+    }catch(err){
+        console.error(err.message);
+        if( err.ind === 'ObjectId' ){
+            return res.status(404).json({msg:'Event not found'});
+        }
+        res.status(500).send('Server Error');
     }
     res.json(event);
   } catch (err) {
