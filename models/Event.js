@@ -18,16 +18,33 @@ const EventSchema = new Schema({
         type: String,
         required: true
     },
-    time: {
-        type: String
-    },
-    date: {
+    dateEvent: {
         type: Date
     },
     listMembers: [{
         user: {
             type: Schema.Types.ObjectId,
             ref: 'users'
+        }
+    }],
+    comments:[{
+        user:{
+            type: Schema.Types.ObjectId,
+            ref: 'users'
+        },
+        text:{
+            type: String,
+            required: true
+        },
+        name: {
+            type: String
+        },
+        avatar: {
+            type: String
+        },
+        dateComment:{
+            type: Date,
+            default: Date.now
         }
     }],
     dateCreated: {

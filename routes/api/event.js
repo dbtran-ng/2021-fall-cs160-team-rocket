@@ -13,7 +13,7 @@ router.post(
   '/',
   [auth, 
     [
-        check('title', 'Name is required').not().isEmpty(),
+        check('title', 'Title is required').not().isEmpty(),
         check('meetingMethod', 'MeetingMethod is required').not().isEmpty(),
         check('description', 'Description is required').not().isEmpty(),
     ]],
@@ -30,8 +30,7 @@ router.post(
         title: req.body.title,
         meetingMethod: req.body.meetingMethod,
         description: req.body.description,
-        time: req.body.time,
-        date: req.body.date,
+        dateEvent: req.body.date,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id,
@@ -59,8 +58,8 @@ router.get('/', auth, async (req,res) => {
 
 // @route  GET api/event/:id
 // @test   GET event by eventId
-// @access PUBLIC
-router.get('/:id', async (req,res) => {
+// @access Private
+router.get('/:id', auth, async (req,res) => {
     try{
         const event = await Event.findById(req.params.id);
         
