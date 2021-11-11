@@ -3,3 +3,4 @@ client/node_modules/.cache/*
 .eslintcache
 .eslintcache
 .cache
+client/node_modules/.cache/.eslintcache
