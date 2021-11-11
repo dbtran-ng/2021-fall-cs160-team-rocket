@@ -29,20 +29,20 @@ const EditProfile = ({
   useEffect(() => {
     getCurrentProfile();
     setFormData({
-      name: loading || !profile.name ? "" : profile.name,
-      major: loading || !profile.major ? "" : profile.name,
-      yearInSchool:
-        loading || !profile.yearInSchool ? "" : profile.yearInSchool,
-      email: loading || !profile.email ? "" : profile.email,
-      phone: loading || !profile.phone ? "" : profile.phone,
-      location: loading || !profile.location ? "" : profile.location,
-      skills: loading || !profile.skills ? "" : profile.skills.join(","),
-      hobbies: loading || !profile.hobbies ? "" : profile.hobbies.join(","),
-      facebook: loading || !profile.facebook ? "" : profile.facebook,
-      twitter: loading || !profile.twitter ? "" : profile.twitter,
-      instagram: loading || !profile.instagram ? "" : profile.instagram,
+      name: loading || !profile.name ? '' : profile.name,
+      major: loading || !profile.major ? '' : profile.major,
+      yearInSchool: loading || !profile.yearInSchool ? '' : profile.yearInSchool,
+      email: loading || !profile.email ? '' : profile.email,
+      phone: loading || !profile.phone ? '' : profile.phone,
+      location: loading || !profile.location ? '' : profile.location,
+      skills: loading || !profile.skills ? '' : profile.skills.join(','),
+      hobbies: loading || !profile.hobbies ? '' : profile.hobbies.join(','),
+      facebook: loading || !profile.facebook ? '' : profile.facebook,
+      twitter: loading || !profile.twitter ? '' : profile.twitter,
+      instagram: loading || !profile.instagram ? '' : profile.instagram,
+      linkedin: loading || !profile.linkedin ? '' : profile.linkedin,
     });
-  }, [loading, getCurrentProfile]);
+  }, [loading,getCurrentProfile]);
   const {
     name,
     major,
@@ -222,9 +222,9 @@ const EditProfile = ({
           )}
 
           <input type="submit" className="btn btn-primary my-1" />
-          <a className="btn btn-light my-1" href="dashboard.html">
+          <Link to="/dashboard" className="btn btn-light my-1">
             Go Back
-          </a>
+          </Link>
         </form>
       </section>
     </Fragment>

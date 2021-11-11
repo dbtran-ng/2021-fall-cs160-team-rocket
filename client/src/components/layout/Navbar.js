@@ -14,6 +14,11 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         </Link>
       </li>
       <li>
+        <Link to="/profiles">
+        <i class="fa fa-users"></i> Members
+        </Link>
+      </li>
+      <li>
         <Link to="/profile">
           <i className="fas fa-user" /> Profile
         </Link>
