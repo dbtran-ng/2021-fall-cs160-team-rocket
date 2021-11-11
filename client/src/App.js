@@ -17,7 +17,6 @@ import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import "./App.css";
 
-
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -27,6 +26,7 @@ const App = () => {
   }, []);
   return (
     <Provider store={store}>
+
     <Router>
       <Fragment>
         <Navbar />

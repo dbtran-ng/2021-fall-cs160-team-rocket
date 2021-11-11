@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { logout } from '../../actions/auth';
-import logo from '../../img/sjsulogo.png';
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout } from "../../actions/auth";
+import logo from "../../img/sjsulogo.png";
 
 const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const authLinks = (
@@ -12,6 +12,9 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         <Link to="/dashboard">
           <i class="fa fa-home"></i> <span className="hide-sm">Dashboard</span>
         </Link>
+      </li>
+      <li>
+        <Link to="/profiles">Members</Link>
       </li>
       <li>
         <Link to="/profile">
@@ -25,7 +28,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
       </li>
       <li>
         <a onClick={logout} href="#!">
-          <i className="fas fa-sign-out-alt" />{' '}
+          <i className="fas fa-sign-out-alt" />{" "}
           <span className="hide-sm">Logout</span>
         </a>
       </li>
