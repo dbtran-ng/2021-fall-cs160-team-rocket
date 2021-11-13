@@ -36,15 +36,15 @@ const GroupSchema = new Schema({
     default: Date.now,
   },
 
-  post: [
+  posts: [
     {
       user: {
         type: Schema.Types.ObjectId,
         ref: "users",
       },
       text: {
-        type: Schema.Types.ObjectId,
-        ref: "text",
+        type: String,
+        required: true,
       },
       name: {
         type: String,
@@ -63,8 +63,8 @@ const GroupSchema = new Schema({
             ref: "users",
           },
           text: {
-            type: Schema.Types.ObjectId,
-            ref: "text",
+            type: String,
+            required: true,
           },
           name: {
             type: String,
