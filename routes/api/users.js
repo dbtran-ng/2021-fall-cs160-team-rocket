@@ -14,7 +14,8 @@ router.post(
   '/',
   [
     check('name', 'Name is required').not().isEmpty(),
-    check('email', 'A valid email is required').isEmail(),
+    check('email', 'A valid SJSU email is required').isEmail(),
+    check('email', 'A valid SJSU email is required').contains('sjsu.edu').not(),
     check('password', 'Password with 6 or more characters').isLength({
       min: 6,
     }),
