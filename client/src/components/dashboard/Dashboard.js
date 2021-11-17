@@ -13,7 +13,7 @@ const Dashboard = ({
 }) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -23,7 +23,7 @@ const Dashboard = ({
         <p className="lead">
           <i className="fas fa-user"></i> Welcome {user && user.name}
         </p>
-        {profile !== null ? (
+        {(profile !== null) ? (
           <Fragment>
             <DashboardAction />
           </Fragment>

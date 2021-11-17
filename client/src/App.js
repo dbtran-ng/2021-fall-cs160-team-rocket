@@ -12,6 +12,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import CreateProfile from "./components/profile-form/CreateProfile";
 import Profile from "./components/profile/Profile";
 import Profiles from './components/profile/Profiles';
+import AddEvent from "./components/event-form/AddEvent";
 import { loadUser } from "./actions/auth";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -43,6 +44,7 @@ const App = () => {
             <PrivateRoute exact path ='/edit-profile' component={EditProfile}/>
             <PrivateRoute exact path ='/profile' component={Profile}/>
             <PrivateRoute exact path ='/profiles' component={Profiles}/>
+            <PrivateRoute exact path ='/add-event' component={AddEvent}/>
           </Switch>
         </section>
       </Fragment>  

@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 const DashboardAction = () => {
   return (
     <div className="dash-buttons">
-      <Link to="/create-profile" className="btn btn-light">
-        <i className="fas fa-user-circle text-normal"></i> Create Profile
+      <Link to="/add-event" className="btn btn-light">
+        <i className="fa fa-calendar-alt text-normal"></i> Create Events
+      </Link>
+      <Link to="/create-group" className="btn btn-light">
+      <i class="fa fa-users text-normal"></i> Create Groups
       </Link>
     </div>
   );

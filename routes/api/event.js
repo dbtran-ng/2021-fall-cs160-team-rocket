@@ -6,7 +6,7 @@ const auth = require('../../middleware/auth');
 const Event = require('../../models/Event');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
-const { post } = require('./users');
+
 // @route  POST api/event
 // @test   Create a event
 // @access Private
