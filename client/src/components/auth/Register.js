@@ -1,18 +1,18 @@
-import React, { Fragment, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { register } from '../../actions/auth';
-import { setAlert } from '../../actions/alert';
+import React, { Fragment, useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { register } from "../../actions/auth";
+import { setAlert } from "../../actions/alert";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 //import axios from 'axios';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    repassword: '',
+    name: "",
+    email: "",
+    password: "",
+    repassword: "",
   });
 
   const { name, email, password, repassword } = formData;
@@ -27,7 +27,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== repassword) {
-      setAlert('Passwords do not match', 'danger');
+      setAlert("Passwords do not match", "danger");
     } else {
       register({ name, email, password });
     }
@@ -36,9 +36,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     <Fragment>
       <section className="container">
         <h1 className="large text-primary">Sign Up</h1>
-        <p className="lead">
-            Create Your Account
-        </p>
+        <p className="lead">Create Your Account</p>
         <form className="form" onSubmit={onSubmit}>
           <div className="form-group">
             <input
@@ -76,7 +74,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               onChange={(e) => onChange(e)}
             />
           </div>
-          <input type="submit" className="btn btn-primary" value="Register" />
+          <input
+            type="submit"
+            name="signup"
+            className="btn btn-primary"
+            value="Register"
+          />
         </form>
         <p className="my-1">
           Already have an account? <Link to="/login">Sign In</Link>
@@ -89,10 +92,9 @@ Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 export default connect(mapStateToProps, { setAlert, register })(Register);
