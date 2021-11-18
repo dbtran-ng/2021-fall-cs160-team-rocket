@@ -26,7 +26,7 @@ export const addEvent = (formData) => async (dispatch) =>{
 // get event by ID
 export const getEventById = (id) => async dispatch => {
     try {
-        const res = await axios.get(`/api/event/${id}`);
+        const res = await axios.get('/api/event/${id}');
 
         dispatch({
             type: GET_EVENT,
@@ -40,7 +40,7 @@ export const getEventById = (id) => async dispatch => {
     }
 };
 // get all events
-export const getProfiles = () => async dispatch => {
+export const getEvents = () => async dispatch => {
     try {
         const res = await axios.get('/api/event');
 
