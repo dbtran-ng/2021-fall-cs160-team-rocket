@@ -2,7 +2,6 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
-import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
 
 const Profile = ({
@@ -12,7 +11,7 @@ const Profile = ({
 }) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
   return (
     <div>
       <div
@@ -44,7 +43,6 @@ const Profile = ({
       </div>
 
       <div className="event">
-        // create a list view component for the events
         <h4>list of event that is participated</h4>
         <h4>list of event that is participated</h4>
         <h4>list of event that is participated</h4>
