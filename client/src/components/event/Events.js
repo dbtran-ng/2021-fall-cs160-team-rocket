@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getEvents } from '../../actions/event';
-import EventItem from './event/EventItem';
+import EventItem from './EventItem';
 import Spinner from '../layout/Spinner';
 
 const Events = ({

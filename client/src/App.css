@@ -2,6 +2,7 @@
 :root {
   --primary-color: #0055a2;
   --hover-nav-color: #f7ca18;
+  --hover-button-color: #008EE2;
   --dark-color: #343a40;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
@@ -652,4 +653,22 @@ button {
   width: 30%;
   background: #275ed6;
   text-align: center;
+}
+
+/* BUTTON */
+.backButton{
+  margin: 10px 5px;
+  border: 1px solid var(--primary-color) !important;
+  transition: all 0.5s;
+}
+
+.editButton{
+  margin-left: 25px;
+  border: 1px solid var(--primary-color) !important;
+  transition: all 0.5s;
+}
+
+.backButton:hover, .editButton:hover{
+  color: white !important;
+  background-color: var(--hover-button-color) !important;
 }
