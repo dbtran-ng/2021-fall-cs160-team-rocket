@@ -5,6 +5,7 @@ import {
   DELETE_EVENT,
   UPDATE_EVENT,
   EVENT_ERROR,
+  JOIN_EVENT
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +37,12 @@ export default function eventReducer(state = initialState, action) {
         ...state,
         events: payload,
         loading: false,
+      };
+    case JOIN_EVENT:
+      return {
+        ...state,
+        events: state.events.map((event) => event._id === payload.id ? {...event, listMembers: payload.listMembers} : event),
+        loading: false
       };
     case EVENT_ERROR:
       return {
