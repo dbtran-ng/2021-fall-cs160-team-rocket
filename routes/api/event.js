@@ -52,7 +52,7 @@ router.post(
 router.get('/', auth, async (req, res) => {
   try {
     const events = await Event.find().sort({ date: -1 });
-    res.json(events);
+    return res.json(events);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
