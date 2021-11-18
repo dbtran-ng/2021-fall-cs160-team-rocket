@@ -1,0 +1,523 @@
+{
+	"id": "08b0f6d5-f98f-4c2a-83f1-19ce7cd86af9",
+	"name": "AutomaticTest",
+	"timestamp": "2021-11-18T01:15:23.909Z",
+	"collection_id": "18032290-b9827abd-b37b-4699-a5b2-e80c76c67733",
+	"folder_id": 0,
+	"environment_id": "bf9998fc-1baf-48b5-9243-8365b8e03947",
+	"totalPass": 18,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "eb22f2f3-6d93-492e-a3ae-f86d1bd57758",
+			"name": "Incorrect sign up",
+			"url": "http://localhost:3000/api/users",
+			"time": 513,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Incorrect sign up -> Fail": true
+			},
+			"testPassFailCounts": {
+				"Incorrect sign up -> Fail": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				513
+			],
+			"allTests": [
+				{
+					"Incorrect sign up -> Fail": true
+				}
+			]
+		},
+		{
+			"id": "2565ce89-87d3-4c32-bc23-0b97718e4b7a",
+			"name": "Create User - Pass",
+			"url": "http://localhost:3000/api/users",
+			"time": 884,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Create user sucessful": true
+			},
+			"testPassFailCounts": {
+				"Create user sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				884
+			],
+			"allTests": [
+				{
+					"Create user sucessful": true
+				}
+			]
+		},
+		{
+			"id": "171d50e9-9a57-48ba-a6a2-9d7170d1271a",
+			"name": "Get user token",
+			"url": "http://localhost:3000/api/auth",
+			"time": 807,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Get user token sucessful": true,
+				"has a token": true
+			},
+			"testPassFailCounts": {
+				"Get user token sucessful": {
+					"pass": 1,
+					"fail": 0
+				},
+				"has a token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				807
+			],
+			"allTests": [
+				{
+					"Get user token sucessful": true,
+					"has a token": true
+				}
+			]
+		},
+		{
+			"id": "45f57de0-3461-4dad-9efc-a6b2cab353a4",
+			"name": "Create profile",
+			"url": "http://localhost:3000/api/profile",
+			"time": 689,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Create PROFILE sucessful": true
+			},
+			"testPassFailCounts": {
+				"Create PROFILE sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				689
+			],
+			"allTests": [
+				{
+					"Create PROFILE sucessful": true
+				}
+			]
+		},
+		{
+			"id": "4e438c5d-9459-4533-99b6-7bcae593de30",
+			"name": "Get profile/me",
+			"url": "http://localhost:3000/api/profile/me",
+			"time": 729,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Get PROFILE/ME sucessful": true
+			},
+			"testPassFailCounts": {
+				"Get PROFILE/ME sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				729
+			],
+			"allTests": [
+				{
+					"Get PROFILE/ME sucessful": true
+				}
+			]
+		},
+		{
+			"id": "487407f8-a839-474d-a682-8cd59b8c89ac",
+			"name": "Get all users profile",
+			"url": "http://localhost:3000/api/profile",
+			"time": 679,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Get all PROFILES sucessful": true
+			},
+			"testPassFailCounts": {
+				"Get all PROFILES sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				679
+			],
+			"allTests": [
+				{
+					"Get all PROFILES sucessful": true
+				}
+			]
+		},
+		{
+			"id": "b1c0d660-2f05-4770-9c02-ed1846a13d92",
+			"name": "Create event",
+			"url": "http://localhost:3000/api/event",
+			"time": 710,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Create EVENT sucessful": true,
+				"Event has an _ID": true
+			},
+			"testPassFailCounts": {
+				"Create EVENT sucessful": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Event has an _ID": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				710
+			],
+			"allTests": [
+				{
+					"Create EVENT sucessful": true,
+					"Event has an _ID": true
+				}
+			]
+		},
+		{
+			"id": "33e9c994-4d9e-49cb-ab9c-c7e4f3956676",
+			"name": "Create comment in Event",
+			"url": "http://localhost:3000/api/event/comment/6195a9313005869a73d52c2b",
+			"time": 1013,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Create COMMENT FOR EVENT sucessful": true
+			},
+			"testPassFailCounts": {
+				"Create COMMENT FOR EVENT sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				1013
+			],
+			"allTests": [
+				{
+					"Create COMMENT FOR EVENT sucessful": true
+				}
+			]
+		},
+		{
+			"id": "94281754-8b5e-4a24-a931-8281f990de83",
+			"name": "get all events private",
+			"url": "http://localhost:3000/api/event",
+			"time": 619,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Get all EVENTS sucessful": true
+			},
+			"testPassFailCounts": {
+				"Get all EVENTS sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				619
+			],
+			"allTests": [
+				{
+					"Get all EVENTS sucessful": true
+				}
+			]
+		},
+		{
+			"id": "cf15777f-9aa3-415d-b806-c79f45ac93b1",
+			"name": "Create group",
+			"url": "http://localhost:3000/api/group",
+			"time": 812,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Create GROUP sucessful": true,
+				"GROUP has an _ID": true
+			},
+			"testPassFailCounts": {
+				"Create GROUP sucessful": {
+					"pass": 1,
+					"fail": 0
+				},
+				"GROUP has an _ID": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				812
+			],
+			"allTests": [
+				{
+					"Create GROUP sucessful": true,
+					"GROUP has an _ID": true
+				}
+			]
+		},
+		{
+			"id": "09afac2b-fbf0-41bf-9d76-b7d595016b28",
+			"name": "Create Post in Group",
+			"url": "http://localhost:3000/api/group/post/6195a9343005869a73d52c37",
+			"time": 878,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				878
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "8f6a6a3e-e588-4b7b-9769-345ca7ae8ba2",
+			"name": "Get all groups private",
+			"url": "http://localhost:3000/api/group",
+			"time": 619,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Get all GROUPS sucessful": true
+			},
+			"testPassFailCounts": {
+				"Get all GROUPS sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				619
+			],
+			"allTests": [
+				{
+					"Get all GROUPS sucessful": true
+				}
+			]
+		},
+		{
+			"id": "f32a2a07-2699-4f0c-b244-dcd0dc0eb69e",
+			"name": "Get group by id",
+			"url": "http://localhost:3000/api/group/6195a9343005869a73d52c37",
+			"time": 598,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Get GROUP by id sucessful": true
+			},
+			"testPassFailCounts": {
+				"Get GROUP by id sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				598
+			],
+			"allTests": [
+				{
+					"Get GROUP by id sucessful": true
+				}
+			]
+		},
+		{
+			"id": "76a59bfc-7075-4a6e-8d65-effabfd6e183",
+			"name": "DeleteEvent",
+			"url": "http://localhost:3000/api/event/6195a9313005869a73d52c2b",
+			"time": 734,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Delete EVENT sucessful": true
+			},
+			"testPassFailCounts": {
+				"Delete EVENT sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				734
+			],
+			"allTests": [
+				{
+					"Delete EVENT sucessful": true
+				}
+			]
+		},
+		{
+			"id": "1440c8f5-147c-4d76-b16a-8649aa12f4eb",
+			"name": "Delete group",
+			"url": "http://localhost:3000/api/group/6195a9343005869a73d52c37",
+			"time": 811,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Delete GROUP sucessful": true
+			},
+			"testPassFailCounts": {
+				"Delete GROUP sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				811
+			],
+			"allTests": [
+				{
+					"Delete GROUP sucessful": true
+				}
+			]
+		},
+		{
+			"id": "2bf39a1e-1f47-4979-9abd-019fe9a7dc40",
+			"name": "Delete profile",
+			"url": "http://localhost:3000/api/profile/",
+			"time": 706,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Delete PROFILE sucessful": true
+			},
+			"testPassFailCounts": {
+				"Delete PROFILE sucessful": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				706
+			],
+			"allTests": [
+				{
+					"Delete PROFILE sucessful": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 11801,
+	"collection": {
+		"requests": [
+			{
+				"id": "eb22f2f3-6d93-492e-a3ae-f86d1bd57758",
+				"method": "POST"
+			},
+			{
+				"id": "2565ce89-87d3-4c32-bc23-0b97718e4b7a",
+				"method": "POST"
+			},
+			{
+				"id": "171d50e9-9a57-48ba-a6a2-9d7170d1271a",
+				"method": "POST"
+			},
+			{
+				"id": "45f57de0-3461-4dad-9efc-a6b2cab353a4",
+				"method": "POST"
+			},
+			{
+				"id": "4e438c5d-9459-4533-99b6-7bcae593de30",
+				"method": "GET"
+			},
+			{
+				"id": "487407f8-a839-474d-a682-8cd59b8c89ac",
+				"method": "GET"
+			},
+			{
+				"id": "b1c0d660-2f05-4770-9c02-ed1846a13d92",
+				"method": "POST"
+			},
+			{
+				"id": "33e9c994-4d9e-49cb-ab9c-c7e4f3956676",
+				"method": "POST"
+			},
+			{
+				"id": "94281754-8b5e-4a24-a931-8281f990de83",
+				"method": "GET"
+			},
+			{
+				"id": "cf15777f-9aa3-415d-b806-c79f45ac93b1",
+				"method": "POST"
+			},
+			{
+				"id": "09afac2b-fbf0-41bf-9d76-b7d595016b28",
+				"method": "POST"
+			},
+			{
+				"id": "8f6a6a3e-e588-4b7b-9769-345ca7ae8ba2",
+				"method": "GET"
+			},
+			{
+				"id": "f32a2a07-2699-4f0c-b244-dcd0dc0eb69e",
+				"method": "GET"
+			},
+			{
+				"id": "76a59bfc-7075-4a6e-8d65-effabfd6e183",
+				"method": "DELETE"
+			},
+			{
+				"id": "1440c8f5-147c-4d76-b16a-8649aa12f4eb",
+				"method": "DELETE"
+			},
+			{
+				"id": "2bf39a1e-1f47-4979-9abd-019fe9a7dc40",
+				"method": "DELETE"
+			}
+		]
+	}
+}
