@@ -19,7 +19,9 @@ export const UPDATE_EVENT = 'UPDATE_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const GET_EVENT = 'GET_EVENT';
 export const GET_EVENTS = 'GET_EVENTS';
+export const JOIN_EVENT = 'JOIN_EVENT';
 export const EVENT_ERROR = 'EVENT_ERROR';
+
 
 export const ADD_GROUP = 'ADD_GROUP';
 export const UPDATE_GROUP = 'UPDATE_GROUP';

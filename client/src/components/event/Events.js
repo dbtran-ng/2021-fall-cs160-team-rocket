@@ -28,7 +28,7 @@ const Events = ({
                   <EventItem key={event._id} event={event} />
                 ))
               ) : (
-                <h4>No Profiles in our Database</h4>
+                <h4>No Events in our Database</h4>
               )}
             </div>
           </section>

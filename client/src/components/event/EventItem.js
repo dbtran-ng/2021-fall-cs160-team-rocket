@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 const EventItem = ({
   event: {
-    user: { _id, name, avatar },
-    id,
+    user: { name, avatar },
+    _id,
     title, description, dateCreated,
     auth,
   },
@@ -17,7 +17,7 @@ const EventItem = ({
           <h4 className="my-1">{title && <span>{title}</span>}</h4>
           <p className="post-date">Posted on {(dateCreated)}</p>
           <p className="my-1">{description && <span>{description}</span>}</p>
-          <Link to={`/event/${id}`} className="btn btn-primary">
+          <Link to={`/event/${_id}`} className="btn btn-primary">
             View Event Details
           </Link>
         </div>

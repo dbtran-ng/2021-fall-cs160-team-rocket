@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-
+const checkById = require('../../middleware/checkObjectId');
 const Event = require('../../models/Event');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
@@ -168,5 +168,51 @@ router.post('/comment/:id', [
       return res.status(500).send('Server Error');
     }
   });
+
+  // @route  PUT api/event/join/:id
+  // @test   Join an event by eventId
+  // @access Private
+router.put('/join/:id', auth, async (req,res) =>{
+  try {
+    const event = await Event.findById(req.params.id);
+    // check if user already joined this event
+    if ( event.listMembers.some((member) => member.user.toString() === req.user.id)){
+      return res.status(400).json({msg: 'Already joined this Event'});
+    }
+
+    event.listMembers.unshift({user: req.user.id});
+    await event.save();
+
+    return res.json(event.listMembers);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server Error');
+  }
+})
+
+  // @route  PUT api/event/join/cancel/:id
+  // @test   Join an event by eventId
+  // @access Private
+  router.put('/join/cancel/:id', auth, async (req,res) =>{
+    try {
+      const event = await Event.findById(req.params.id);
+      // check if user has not joined this event
+      if ( !event.listMembers.some((member) => member.user.toString() === req.user.id)){
+        return res.status(400).json({msg: 'This user has not joined this Event'});
+      }
+  
+      //remove this member
+      event.listMembers = event.listMembers.filter(
+        ({user}) => user.toString() !== req.user.id
+      );
+ 
+      await event.save();
+  
+      return res.json(event.listMembers);
+    } catch (err) {
+      console.error(err.message);
+      return res.status(500).send('Server Error');
+    }
+  })
 
 module.exports = router;

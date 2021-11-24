@@ -5,6 +5,7 @@ import{
     DELETE_EVENT,
     GET_EVENT,
     GET_EVENTS,
+    JOIN_EVENT,
     EVENT_ERROR
 } from './types';
 //add event
@@ -55,6 +56,23 @@ export const getEvents = () => async dispatch => {
         });
     }
 };
+
+// join event
+export const joinEvent = (id) => async dispatch =>{
+    try {
+        const res = await axios.put(`/api/event/join/${id}`);
+        dispatch({
+            type: JOIN_EVENT,
+            payload: {id, listMembers: res.data}
+        });
+
+    } catch (err) {
+        dispatch({
+            type: EVENT_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        });
+    }
+}
 // delete Event By Id
 export const deleteEventById = (id) => async dispatch => {
     try {
