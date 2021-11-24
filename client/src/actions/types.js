@@ -21,3 +21,11 @@ export const GET_EVENT = 'GET_EVENT';
 export const GET_EVENTS = 'GET_EVENTS';
 export const JOIN_EVENT = 'JOIN_EVENT';
 export const EVENT_ERROR = 'EVENT_ERROR';
+
+
+export const ADD_GROUP = 'ADD_GROUP';
+export const UPDATE_GROUP = 'UPDATE_GROUP';
+export const DELETE_GROUP = 'DELETE_GROUP';
+export const GET_GROUP = 'GET_GROUP';
+export const GET_GROUPS = 'GET_GROUPS';
+export const GROUP_ERROR = 'GROUP_ERROR';
