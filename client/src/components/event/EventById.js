@@ -12,7 +12,6 @@ const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
     getEventById(id);
   }, [getEventById, id]);
 
-
   return (
     <section className="container">
       {event === null ? (
@@ -29,26 +28,43 @@ const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
                 Edit Event
               </Link>
             )}
-
-          <div className="profile bg-light">
-            <div>
-              <h5>{event.user.name}</h5>
-              <h2>{event.title}</h2>
-              <p className="my-1">
-                {event.meetingMethod && <span>{event.meetingMethod}</span>}
-              </p>
-              <p className="post-date">Created on {formatDate(event.dateCreated)}</p>
+          <div className="bg-light">
+            <div className="profile">
+              <div>
+                <h5>{event.user.name}</h5>
+                <h2>{event.title}</h2>
+                <p className="my-1">
+                  {event.meetingMethod && <span>{event.meetingMethod}</span>}
+                </p>
+                <p className="post-date">
+                  Created on {formatDate(event.dateCreated)}
+                </p>
+              </div>
+            </div>
+            <div className="mb-1 mx-3">
+              <button
+                onClick={() => {
+                  joinEvent(id);
+                  window.location.reload(false);
+                }}
+                type="button"
+                className="btn btn-primary"
+              >
+                Join
+              </button>
             </div>
           </div>
-          
-          <button onClick={()=> joinEvent(id)} type="button" className="btn btn-primary">Join</button>
-
+          <h2 className="mt-4">List of Members has joined with us</h2>
           <div className="col-6">
-                {event.listMembers.map((member, index) => (
-                  <div key={index} className="p-1">
-                    <i className="fas fa-check" /> {member._id}
-                  </div>
-                ))}
+            {event.listMembers.map((member, index) => (
+              <div
+                key={index}
+                className="p-1"
+                style={{ textTransform: 'capitalize' }}
+              >
+                <i className="fas fa-check" /> {member.name}
+              </div>
+            ))}
           </div>
         </Fragment>
       )}

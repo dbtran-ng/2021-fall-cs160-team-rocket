@@ -1,17 +1,20 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profile';
 import { Link } from 'react-router-dom';
-
+import { getEvents } from '../../actions/event';
 const Profile = ({
   getCurrentProfile,
+  getEvents,
+  event: {events},
   auth: { user },
   profile: { profile, loading },
 }) => {
   useEffect(() => {
     getCurrentProfile();
-  }, [getCurrentProfile]);
+    getEvents();
+  }, [getCurrentProfile, getEvents]);
   return (
     <div className="bg-light container">
       <div
@@ -30,7 +33,7 @@ const Profile = ({
           />
         </div>
         <div>
-          <h4>{user && user.name}</h4>
+          <h4 style={{ textTransform: 'capitalize' }}>{user && user.name}</h4>
           <div style={{ display: 'flex' }}>
             <h5>Major: {profile && profile.major}</h5>
           </div>
@@ -38,7 +41,7 @@ const Profile = ({
             <h5>Phone: {profile && profile.phone}</h5>
           </div>
           <div>
-          <h2 className="text-primary">Hobbies</h2>
+            <h2 className="text-primary">Hobbies</h2>
             {profile.hobbies.map((hobby, index) => (
               <div key={index} className="p-1">
                 <i className="fas fa-check" /> {hobby}
@@ -46,7 +49,7 @@ const Profile = ({
             ))}
           </div>
           <div>
-          <h2 className="text-primary">Skill Set</h2>
+            <h2 className="text-primary">Skill Set</h2>
             {profile.skills.map((skill, index) => (
               <div key={index} className="p-1">
                 <i className="fas fa-check" /> {skill}
@@ -57,8 +60,14 @@ const Profile = ({
       </div>
 
       <div className="event px-5">
-        <h4>list of event that is participated</h4>
-        <p>event 1</p>
+        <h4>List of Events Participated</h4>
+        { events.map((ev, index) => (
+          ev.listMembers.user === profile.user._id &&
+            <div key={index} className="p-1">
+            <i className="fas fa-check" /> {ev.title}
+            </div>
+          ))}
+      
       </div>
       <div className="buttons my-3 mx-4">
         <Link to="/edit-profile" className="btn btn-primary">
@@ -72,9 +81,11 @@ Profile.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  event: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   auth: state.auth,
   profile: state.profile,
+  event: state.event
 });
-export default connect(mapStateToProps, { getCurrentProfile })(Profile);
+export default connect(mapStateToProps, { getCurrentProfile, getEvents })(Profile);
