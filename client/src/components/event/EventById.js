@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getEventById, joinEvent } from '../../actions/event';
 import Spinner from '../layout/Spinner';
 import { Link, useParams } from 'react-router-dom';
-import formatDate from './../utils/formatDate';
+import formatDate from '../../utils/formatDate';
 
 const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
   const { id } = useParams();
@@ -37,11 +37,19 @@ const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
               <p className="my-1">
                 {event.meetingMethod && <span>{event.meetingMethod}</span>}
               </p>
-              <p className="post-date">Joined on {formatDate(event.dateCreated)}</p>
+              <p className="post-date">Created on {formatDate(event.dateCreated)}</p>
             </div>
           </div>
           
           <button onClick={()=> joinEvent(id)} type="button" className="btn btn-primary">Join</button>
+
+          <div className="col-6">
+                {event.listMembers.map((member, index) => (
+                  <div key={index} className="p-1">
+                    <i className="fas fa-check" /> {member._id}
+                  </div>
+                ))}
+          </div>
         </Fragment>
       )}
     </section>

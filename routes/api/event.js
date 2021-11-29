@@ -6,6 +6,7 @@ const checkById = require('../../middleware/checkObjectId');
 const Event = require('../../models/Event');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
+const checkObjectId = require('../../middleware/checkObjectId');
 
 // @route  POST api/event
 // @test   Create a event
@@ -172,15 +173,21 @@ router.post('/comment/:id', [
   // @route  PUT api/event/join/:id
   // @test   Join an event by eventId
   // @access Private
-router.put('/join/:id', auth, async (req,res) =>{
+router.put('/join/:id', auth, checkObjectId('id'), async (req,res) =>{
   try {
+    const user = await User.findById(req.user.id).select('-password');
     const event = await Event.findById(req.params.id);
     // check if user already joined this event
     if ( event.listMembers.some((member) => member.user.toString() === req.user.id)){
       return res.status(400).json({msg: 'Already joined this Event'});
     }
+    const newMember = {
+      name: user.name,
+      avatar: user.avatar,
+      user: req.user.id
+    };
 
-    event.listMembers.unshift({user: req.user.id});
+    event.listMembers.unshift({newMember});
     await event.save();
 
     return res.json(event.listMembers);

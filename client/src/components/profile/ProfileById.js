@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getProfileById } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import { Link, useParams } from 'react-router-dom';
-import formatDate from './../utils/formatDate';
+import formatDate from '../../utils/formatDate';
 
 const ProfileById = ({ getProfileById, profile: { profile }, auth }) => {
   const { id } = useParams();
