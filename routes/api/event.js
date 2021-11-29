@@ -173,21 +173,16 @@ router.post('/comment/:id', [
   // @route  PUT api/event/join/:id
   // @test   Join an event by eventId
   // @access Private
-router.put('/join/:id', auth, checkObjectId('id'), async (req,res) =>{
+router.put('/join/:id', auth, async (req,res) =>{
   try {
     const user = await User.findById(req.user.id).select('-password');
     const event = await Event.findById(req.params.id);
     // check if user already joined this event
     if ( event.listMembers.some((member) => member.user.toString() === req.user.id)){
-      return res.status(400).json({msg: 'Already joined this Event'});
+      return res.status(400).json({msg: 'This user has joined this Event'});
     }
-    const newMember = {
-      name: user.name,
-      avatar: user.avatar,
-      user: req.user.id
-    };
 
-    event.listMembers.unshift({newMember});
+    event.listMembers.unshift({user: req.user.id, name : user.name});
     await event.save();
 
     return res.json(event.listMembers);
@@ -198,7 +193,7 @@ router.put('/join/:id', auth, checkObjectId('id'), async (req,res) =>{
 })
 
   // @route  PUT api/event/join/cancel/:id
-  // @test   Join an event by eventId
+  // @test   Not join an event by eventId
   // @access Private
   router.put('/join/cancel/:id', auth, async (req,res) =>{
     try {
