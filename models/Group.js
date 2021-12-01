@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const GroupSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "users",
+    ref: "user",
   },
   title: {
     type: String,
@@ -26,7 +26,10 @@ const GroupSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: "users",
+        ref: "user",
+      },
+      name: {
+        type: String,
       },
     },
   ],
@@ -40,7 +43,7 @@ const GroupSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: "users",
+        ref: "user",
       },
       text: {
         type: String,
@@ -60,7 +63,7 @@ const GroupSchema = new Schema({
         {
           user: {
             type: Schema.Types.ObjectId,
-            ref: "users",
+            ref: "user",
           },
           text: {
             type: String,
