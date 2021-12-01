@@ -23,21 +23,31 @@ const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
           </Link>
           {auth.isAuthenticated &&
             auth.loading === false &&
-            auth.user._id === event.user._id && (
-              <Link to="/edit-event" className="btn editButton">
+            auth.user._id === event.user && (
+              <Link to={`/edit-event/${event._id}`} className="btn editButton">
                 Edit Event
               </Link>
             )}
           <div className="bg-light">
-            <div className="profile">
+            <div className="event">
               <div>
-                <h5>{event.user.name}</h5>
                 <h2>{event.title}</h2>
-                <p className="my-1">
+                <small className="post-date">
+                  Created on {formatDate(event.dateCreated)}
+                </small>
+                <p className="mt-4">
+                  <span style={{ fontStyle: 'italic' }}>Meeting Method: </span>
                   {event.meetingMethod && <span>{event.meetingMethod}</span>}
                 </p>
-                <p className="post-date">
-                  Created on {formatDate(event.dateCreated)}
+                <p>
+                  <span style={{ fontStyle: 'italic' }}>Date: </span>{' '}
+                  {event.dateEvent && (
+                    <span>{formatDate(event.dateEvent)}</span>
+                  )}
+                </p>
+                <p>
+                  <span style={{ fontStyle: 'italic' }}>Description: </span>
+                  {event.description && <span style={{ textTransform: 'uppercase'}}>{event.description}</span>}
                 </p>
               </div>
             </div>

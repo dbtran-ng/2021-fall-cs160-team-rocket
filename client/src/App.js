@@ -15,6 +15,7 @@ import Profile from "./components/profile/Profile";
 import ProfileById from "./components/profile/ProfileById";
 import Profiles from './components/profile/Profiles';
 import AddEvent from "./components/event-form/AddEvent";
+import EditEvent from "./components/event-form/EditEvent";
 import Events from "./components/event/Events";
 import EventById from "./components/event/EventById";
 import { loadUser } from "./actions/auth";
@@ -54,6 +55,7 @@ const App = () => {
             <PrivateRoute exact path ='/profiles' component={Profiles}/>
             <PrivateRoute exact path ='/event' component={Events}/>
             <PrivateRoute exact path ='/add-event' component={AddEvent}/>
+            <PrivateRoute exact path="/edit-event/:id" component={EditEvent} />
             <PrivateRoute exact path='/event/:id' component={EventById} />
           </Switch>
         </section>
