@@ -80,12 +80,11 @@ router.post(
   if (meetingMethod)    eventFields.meetingMethod = meetingMethod;
   if (description)    eventFields.description = description;
   if (dateEvent)    eventFields.dateEvent = dateEvent;
-
-
     try {
       let event = await Event.findOneAndUpdate(
-        { event: req.params.id },
-        { $set: eventFields }
+        { _id: req.params.id },
+        { $set: eventFields },
+        { new: true, upsert: true, setDefaultsOnInsert: true }
       )
       return res.json(event);
     } catch (err) {
@@ -238,31 +237,28 @@ router.post('/comment/:id', [
   // @route  PUT api/event/join/:id
   // @test   Join an event by eventId
   // @access Private
-router.put('/join/:id', auth, async (req,res) =>{
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    const profile = await Profile.findOne({user: req.user.id}).populate('user',['name','avatar']);
-    if (!profile){
-      return res.status(400).json({msg: 'Profile not found'});
+  router.put('/join/:id', auth, async (req,res) =>{
+    try {
+      const user = await User.findById(req.user.id).select('-password');
+      const profile = await Profile.findOne({user: req.user.id}).populate('user',['name','avatar']);
+      if (!profile){
+        return res.status(400).json({msg: 'Profile not found'});
+      }
+      const event = await Event.findById(req.params.id);
+      // check if user already joined this event
+      if ( event.listMembers.some((member) => member.user.toString() === req.user.id)){
+        return res.status(400).json({msg: 'This user has joined this Event'});
+      }
+      event.listMembers.unshift({user: req.user.id, name : user.name});
+      profile.events.unshift({event: event.id, title: event.title});
+      await event.save();
+      await profile.save();
+      return res.json(event.listMembers);
+    } catch (err) {
+      console.error(err.message);
+      return res.status(500).send('Server Error');
     }
-    const event = await Event.findById(req.params.id);
-    // check if user already joined this event
-    if ( event.listMembers.some((member) => member.user.toString() === req.user.id)){
-      return res.status(400).json({msg: 'This user has joined this Event'});
-    }
-    if ( profile.events.some((e) => id === profile.e.id)){
-      return res.status(400).json({msg: 'This user has joined this Event'});
-    }
-    event.listMembers.unshift({user: req.user.id, name : user.name});
-    profile.events.unshift({event: event.id, title: event.title});
-    await event.save();
-    await profile.save();
-    return res.json(event.listMembers);
-  } catch (err) {
-    console.error(err.message);
-    return res.status(500).send('Server Error');
-  }
-})
+  })
 
   // @route  PUT api/event/join/cancel/:id
   // @test   Not join an event by eventId
