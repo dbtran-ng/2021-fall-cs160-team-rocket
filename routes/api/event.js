@@ -47,6 +47,54 @@ router.post(
     }
   }
 );
+
+// @route  POST api/event/:id
+// @test   Edit a event
+// @access Private
+router.post(
+  '/:id',
+  [
+    auth,
+    [
+      check('title', 'Title is required').not().isEmpty(),
+      check('meetingMethod', 'MeetingMethod is required').not().isEmpty(),
+      check('description', 'Description is required').not().isEmpty(),
+      check('dateEvent', 'Date is required').not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const {
+      title,
+      meetingMethod,
+      description,
+      dateEvent
+  } = req.body;
+
+  const eventFields= {};
+  eventFields.event = req.params.id;
+  if (title)    eventFields.title = title;
+  if (meetingMethod)    eventFields.meetingMethod = meetingMethod;
+  if (description)    eventFields.description = description;
+  if (dateEvent)    eventFields.dateEvent = dateEvent;
+
+
+    try {
+      let event = await Event.findOneAndUpdate(
+        { event: req.params.id },
+        { $set: eventFields }
+      )
+      return res.json(event);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 // @route  GET api/event
 // @test   GET all events
 // @access Private
@@ -176,15 +224,22 @@ router.post('/comment/:id', [
 router.put('/join/:id', auth, async (req,res) =>{
   try {
     const user = await User.findById(req.user.id).select('-password');
+    const profile = await Profile.findOne({user: req.user.id}).populate('user',['name','avatar']);
+    if (!profile){
+      return res.status(400).json({msg: 'Profile not found'});
+    }
     const event = await Event.findById(req.params.id);
     // check if user already joined this event
     if ( event.listMembers.some((member) => member.user.toString() === req.user.id)){
       return res.status(400).json({msg: 'This user has joined this Event'});
     }
-
+    if ( profile.events.some((e) => id === profile.e.id)){
+      return res.status(400).json({msg: 'This user has joined this Event'});
+    }
     event.listMembers.unshift({user: req.user.id, name : user.name});
+    profile.events.unshift({event: event.id, title: event.title});
     await event.save();
-
+    await profile.save();
     return res.json(event.listMembers);
   } catch (err) {
     console.error(err.message);

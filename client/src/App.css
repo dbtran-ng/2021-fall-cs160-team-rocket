@@ -63,9 +63,11 @@ img {
   margin-bottom: 1rem;
 }
 
-.lead {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.welcome .lead {
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin: 2.5rem 0;
 }
 
 .text-center {
@@ -227,6 +229,9 @@ img {
 
 .round-img {
   border-radius: 50%;
+  width: 50%;
+  margin-bottom: 10px;
+  margin-left: 50px;
 }
 
 .line {
@@ -382,7 +387,7 @@ button {
 /* Profiles Page */
 .profile {
   display: grid;
-  grid-template-columns: 2fr 4fr 2fr;
+  grid-template-columns: 2fr 3fr 3fr;
   align-items: center;
   grid-gap: 2rem;
   padding: 1rem;
@@ -435,52 +440,13 @@ button {
   text-align: center;
 }
 
-.profile-exp {
-  grid-area: exp;
+/* Event Page */
+.event {
+  padding: 0.5rem 1rem;
 }
 
-.profile-edu {
-  grid-area: edu;
-}
-
-.profile-exp h2,
-.profile-edu h2 {
-  margin-bottom: 1rem;
-}
-
-.profile-exp > div,
-.profile-edu > div {
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: #ccc 1px dotted;
-}
-
-.profile-exp > div:last-child,
-.profile-edu > div:last-child {
-  border: 0;
-}
-
-.profile-exp p,
-.profile-edu p {
-  margin: 0.5rem 0;
-}
-
-.profile-github {
-  grid-area: github;
-}
-
-.profile-github .repo {
-  display: flex;
-}
-
-.profile-github .repo > div:first-child {
-  flex: 7;
-  flex-basis: 70%;
-}
-
-.profile-github > div:last-child {
-  flex: 3;
-  flex-basis: 20%;
+.event__description{
+  text-transform: uppercase;
 }
 
 /* Posts Page */
@@ -535,10 +501,6 @@ button {
 
   .large {
     font-size: 2rem;
-  }
-
-  .lead {
-    font-size: 1rem;
   }
 
   /* Navbar */

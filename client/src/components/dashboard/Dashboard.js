@@ -18,12 +18,12 @@ const Dashboard = ({
     <Spinner />
   ) : (
     <Fragment>
-      <section className="container">
+      <section className="welcome container">
         <h1 className="large text-normal">Dashboard</h1>
-        <p className="lead">
-          <i className="fas fa-user"></i> Welcome {user && user.name}
+        <p className="lead welcome-text">
+          <i className="fa fa-smile text-normal"></i> Welcome {user && user.name} <i className="fa fa-smile text-normal"></i> 
         </p>
-        {(profile !== null) ? (
+        {profile !== null ? (
           <Fragment>
             <DashboardAction />
           </Fragment>
