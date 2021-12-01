@@ -29,11 +29,6 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         </Link>
       </li>
       <li>
-        <Link to="/group">
-          <i class="fa fa-calendar-alt" /> Groups
-        </Link>
-      </li>
-      <li>
         <a onClick={logout} href="#!">
           <i className="fas fa-sign-out-alt" />{" "}
           <span className="hide-sm">Logout</span>

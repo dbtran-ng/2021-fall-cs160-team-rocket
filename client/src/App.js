@@ -16,8 +16,10 @@ import ProfileById from "./components/profile/ProfileById";
 import Profiles from "./components/profile/Profiles";
 import AddEvent from "./components/event-form/AddEvent";
 import EditEvent from "./components/event-form/EditEvent";
+import EventManage from "./components/event/EventManage";
 import Events from "./components/event/Events";
 import EventById from "./components/event/EventById";
+import EventByMe from "./components/event/EventByMe";
 import Groups from "./components/group/Groups";
 import AddGroup from "./components/group-form/AddGroup";
 import GroupById from "./components/group/GroupById";
@@ -61,6 +63,8 @@ const App = () => {
             <PrivateRoute exact path ='/add-event' component={AddEvent}/>
             <PrivateRoute exact path="/edit-event/:id" component={EditEvent} />
             <PrivateRoute exact path='/event/:id' component={EventById} />
+            <PrivateRoute exact path='/manage-event' component={EventManage} />
+            <PrivateRoute exact path='/manage-event/:id' component={EventByMe} />
             <PrivateRoute exact path="/group" component={Groups} />
             <PrivateRoute exact path="/create-group" component={AddGroup} />
             <PrivateRoute exact path="/group/:id" component={GroupById} />
