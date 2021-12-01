@@ -176,15 +176,22 @@ router.post('/comment/:id', [
 router.put('/join/:id', auth, async (req,res) =>{
   try {
     const user = await User.findById(req.user.id).select('-password');
+    const profile = await Profile.findOne({user: req.user.id}).populate('user',['name','avatar']);
+    if (!profile){
+      return res.status(400).json({msg: 'Profile not found'});
+    }
     const event = await Event.findById(req.params.id);
     // check if user already joined this event
     if ( event.listMembers.some((member) => member.user.toString() === req.user.id)){
       return res.status(400).json({msg: 'This user has joined this Event'});
     }
-
+    if ( profile.events.some((e) => id === profile.e.id)){
+      return res.status(400).json({msg: 'This user has joined this Event'});
+    }
     event.listMembers.unshift({user: req.user.id, name : user.name});
+    profile.events.unshift({event: event.id, title: event.title});
     await event.save();
-
+    await profile.save();
     return res.json(event.listMembers);
   } catch (err) {
     console.error(err.message);
