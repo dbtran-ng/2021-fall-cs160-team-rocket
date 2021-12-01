@@ -64,10 +64,28 @@ export const getEventById = (id) => async (dispatch) => {
     });
   }
 };
+
 // get all events
 export const getEvents = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/event');
+
+    dispatch({
+      type: GET_EVENTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: EVENT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// get my events
+export const getMyEvents = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/event/me');
 
     dispatch({
       type: GET_EVENTS,
@@ -97,7 +115,7 @@ export const joinEvent = (id) => async (dispatch) => {
   }
 };
 // delete Event By Id
-export const deleteEventById = (id) => async (dispatch) => {
+export const deleteEventById = (id, history) => async (dispatch) => {
   try {
     await axios.delete(`/api/event/${id}`);
 

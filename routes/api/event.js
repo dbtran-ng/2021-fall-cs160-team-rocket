@@ -34,7 +34,7 @@ router.post(
         title: req.body.title,
         meetingMethod: req.body.meetingMethod,
         description: req.body.description,
-        dateEvent: req.body.date,
+        dateEvent: req.body.dateEvent,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id,
@@ -107,6 +107,23 @@ router.get('/', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// @route  GET api/event/me
+// @test   GET my events
+// @access Private
+router.get('/me', auth, async (req, res) => {
+  try {
+    const events = await Event.find({user: req.user.id}).sort({ date: -1 });
+    if (!events){
+      return res.status(400).json({msg: 'No events for this user'});
+  }
+    return res.json(events);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 
 // @route  GET api/event/:id
 // @test   GET event by eventId
