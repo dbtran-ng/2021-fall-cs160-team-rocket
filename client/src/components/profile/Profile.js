@@ -1,74 +1,75 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Spinner from '../layout/Spinner';
 import { getCurrentProfile } from '../../actions/profile';
 import { Link } from 'react-router-dom';
 import { getEvents } from '../../actions/event';
 const Profile = ({
   getCurrentProfile,
   getEvents,
-  event: {events},
-  auth: { user },
+  auth,
   profile: { profile, loading },
 }) => {
   useEffect(() => {
     getCurrentProfile();
     getEvents();
   }, [getCurrentProfile, getEvents]);
-  return (
+  return loading && profile === null ? (
+    <Spinner />
+  ) : (
     <div className="bg-light container">
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          margin: '18px 18px',
-          borderBottom: '1px solid grey',
-        }}
-      >
+      <div className="profile">
         <div>
           <img
-            src={profile && profile.avatar}
+            src={auth.user && auth.user.avatar}
             alt="avatar"
             className="round-img"
           />
+          <div>
+            {' '}
+            <input type="file" onChange={(e) => {}} />{' '}
+          </div>
         </div>
         <div>
-          <h4 style={{ textTransform: 'capitalize' }}>{user && user.name}</h4>
+          <h4 style={{ textTransform: 'capitalize' }}>
+            {auth.user && auth.user.name}
+          </h4>
           <div style={{ display: 'flex' }}>
             <h5>Major: {profile && profile.major}</h5>
           </div>
           <div style={{ display: 'flex' }}>
             <h5>Phone: {profile && profile.phone}</h5>
           </div>
-          <div>
-            <h2 className="text-primary">Hobbies</h2>
-            {profile.hobbies.map((hobby, index) => (
-              <div key={index} className="p-1">
-                <i className="fas fa-check" /> {hobby}
-              </div>
-            ))}
-          </div>
-          <div>
-            <h2 className="text-primary">Skill Set</h2>
-            {profile.skills.map((skill, index) => (
-              <div key={index} className="p-1">
-                <i className="fas fa-check" /> {skill}
-              </div>
-            ))}
-          </div>
         </div>
+        <div>
+            <h2 className="text-primary">Hobbies</h2>
+            {profile.hobbies &&
+              profile.hobbies.map((hobby, index) => (
+                <div key={index} className="p-1">
+                  <i className="fas fa-check" /> {hobby}
+                </div>
+              ))}
+            <h2 className="text-primary">Skill Set</h2>
+            {profile.skills &&
+              profile.skills.map((skill, index) => (
+                <div key={index} className="p-1">
+                  <i className="fas fa-check" /> {skill}
+                </div>
+              ))}
+          </div>
       </div>
 
       <div className="event px-5">
         <h4>List of Events Participated</h4>
-        { events.map((ev, index) => (
-          ev.listMembers.user === profile.user._id &&
+        {profile.events &&
+          profile.events.map((e, index) => (
             <div key={index} className="p-1">
-            <i className="fas fa-check" /> {ev.title}
+              <i className="fa fa-calendar-alt" /> {e.title}
             </div>
           ))}
-      
       </div>
+
       <div className="buttons my-3 mx-4">
         <Link to="/edit-profile" className="btn btn-primary">
           Update
@@ -86,6 +87,8 @@ Profile.propTypes = {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   profile: state.profile,
-  event: state.event
+  event: state.event,
 });
-export default connect(mapStateToProps, { getCurrentProfile, getEvents })(Profile);
+export default connect(mapStateToProps, { getCurrentProfile, getEvents })(
+  Profile
+);
