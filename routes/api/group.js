@@ -53,7 +53,7 @@ router.post(
 router.get("/", auth, async (req, res) => {
   try {
     const groups = await Group.find().sort({ date: -1 });
-    res.json(groups);
+    return res.json(groups);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -164,4 +164,31 @@ router.delete("/post/:id/:post_id", auth, async (req, res) => {
     return res.status(500).send("Server Error");
   }
 });
+
+// @route  PUT api/group/join/:id
+// @test   Join a group by groupId
+// @access Private
+router.put("/join/:id", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    const group = await Group.findById(req.params.id);
+    // check if user already joined this event
+    if (
+      group.listOfMembers.some(
+        (member) => member.user.toString() === req.user.id
+      )
+    ) {
+      return res.status(400).json({ msg: "This user has joined this Group" });
+    }
+
+    group.listOfMembers.unshift({ user: req.user.id, name: user.name });
+    await group.save();
+
+    return res.json(group.listOfMembers);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
