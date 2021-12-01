@@ -3,7 +3,7 @@ import {
   GET_EVENTS,
   GET_EVENT,
   DELETE_EVENT,
-  UPDATE_EVENT,
+  EDIT_EVENT,
   EVENT_ERROR,
   JOIN_EVENT
 } from '../actions/types';
@@ -26,7 +26,7 @@ export default function eventReducer(state = initialState, action) {
         loading: false,
       };
     case GET_EVENT:
-    case UPDATE_EVENT:
+    case EDIT_EVENT:
       return {
         ...state,
         event: payload,
