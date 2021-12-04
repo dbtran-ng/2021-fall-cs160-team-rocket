@@ -76,8 +76,8 @@ router.post('/',
         profileFields.social = {};
         if (twitter) profileFields.social.twitter = twitter;
         if (facebook) profileFields.social.facebook = facebook;
-        if (linkedin) profileFields.social.youtube = linkedin;
-        if (instagram) profileFields.social.youtube = instagram;
+        if (linkedin) profileFields.social.linkedin = linkedin;
+        if (instagram) profileFields.social.instagram = instagram;
         
         try{
             let profile = await Profile.findOneAndUpdate(

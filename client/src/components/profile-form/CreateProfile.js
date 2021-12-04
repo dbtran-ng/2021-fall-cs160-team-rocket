@@ -15,10 +15,12 @@ const UpdateProfile = ({ createProfile, history }) => {
     skills: '',
     hobbies: '',
     facebook: '',
-    twitter: '',
-    instagram: '',
     linkedin: '',
   });
+
+  const [instagram, setInstagram] = useState("");
+  const [twitter, setTwitter] = useState("");
+
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
   const {
     name,
@@ -30,13 +32,35 @@ const UpdateProfile = ({ createProfile, history }) => {
     skills,
     hobbies,
     facebook,
-    twitter,
-    instagram,
     linkedin,
   } = formData;
+  
 
-  const onChange = (e) =>
+  const postDetails =()=>{
+    const data = new FormData()
+    data.append("file", instagram)
+    data.append("upload_preset","insta-clone")
+    data.append("cloud_name", "dtnzg6l1i")
+    fetch("https://api.cloudinary.com/v1_1/dtnzg6l1i/upload",{
+      method: "post",
+      body:data
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      setTwitter(data.url)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
+  const onChange = (e) =>{
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const onImageChange = (e) =>{
+    setInstagram(e.target.files[0]);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     createProfile(formData, history);
@@ -138,6 +162,19 @@ const UpdateProfile = ({ createProfile, history }) => {
             />
           </div>
 
+          <div className="file-field input-field">
+            <div className="btn btn-primary my-1">
+              <span>Upload Image</span>
+              <input 
+                type="file"
+              
+                onChange={(e) =>onImageChange(e)}/>
+            </div>
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" />
+            </div>
+          </div>
+
           <div className="my-2">
             <button
               onClick={() => toggleSocialInputs(!displaySocialInputs)}
@@ -172,16 +209,7 @@ const UpdateProfile = ({ createProfile, history }) => {
                 />
               </div>
 
-              <div className="form-group social-input">
-                <i className="fab fa-instagram fa-2x"></i>
-                <input
-                  type="text"
-                  placeholder="Instagram URL"
-                  name="instagram"
-                  value={instagram}
-                  onChange={(e) => onChange(e)}
-                />
-              </div>
+            
 
               <div className="form-group social-input">
                 <i className="fab fa-linkedin fa-2x"></i>
@@ -196,7 +224,11 @@ const UpdateProfile = ({ createProfile, history }) => {
             </Fragment>
           )}
 
-          <input type="submit" className="btn btn-primary my-1" />
+          <button type="submit" className="btn btn-primary my-1" 
+          onClick={()=>postDetails()}
+          >
+            Submit
+          </button>
           <Link to="/dashboard" className="btn btn-light my-1">
             Go Back
           </Link>

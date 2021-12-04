@@ -6,13 +6,14 @@ const ProfileItem = ({
   profile: {
     user: { _id, name, avatar },
     yearInSchool,
-    location
+    location,
+    social:{twitter}
   },
 }) => {
   return (
     <section>
       <div className="profile bg-light">
-        <img src={avatar} alt="avatar" className="round-img" />
+        <img src={twitter} alt="avatar" className="round-img" />
         <div>
           <h2>{name}</h2>
           <p>{yearInSchool}</p>
