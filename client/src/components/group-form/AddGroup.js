@@ -32,7 +32,7 @@ const AddGroup = ({ addGroup }) => {
             <small className="form-text">Title of the Group</small>
             <input
               type="text"
-              placeholder="Title"
+              placeholder="* Title"
               name="title"
               value={title}
               onChange={(e) => onChange(e)}
@@ -43,7 +43,7 @@ const AddGroup = ({ addGroup }) => {
             <small className="form-text">
               Choose topics that describe your group's interests
             </small>
-            <input name="topic" value={topic} onChange={(e) => onChange(e)} />
+            <input type="text" placeholder="* Topics" name="topic" value={topic} onChange={(e) => onChange(e)} />
           </div>
           <div className="form-group">
             <small className="form-text">
@@ -52,7 +52,7 @@ const AddGroup = ({ addGroup }) => {
             <textarea
               cols="30"
               rows="5"
-              placeholder="Description"
+              placeholder="* Description"
               name="description"
               value={description}
               onChange={(e) => onChange(e)}

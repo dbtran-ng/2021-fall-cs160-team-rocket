@@ -45,7 +45,7 @@ router.post('/',
             name,
             major,
             yearInSchool,
-            email,
+            picture,
             phone,
             location,
             skills,
@@ -61,7 +61,7 @@ router.post('/',
         if (name)    profileFields.name = name;
         if (major)    profileFields.major = major;
         if (yearInSchool)    profileFields.yearInSchool = yearInSchool;
-        if (email)    profileFields.email = email;
+        if (picture)    profileFields.picture = picture;
         if (phone)    profileFields.phone = phone;
         if (location)    profileFields.location = location;
 
@@ -92,6 +92,40 @@ router.post('/',
         }
     }
 );
+
+// upload profile picture
+router.post('/upload',  
+    auth,
+    async (req, res) =>{
+        const errors = validationResult(req);
+     
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+
+        const {
+            picture,
+        } = req.body;
+
+        const profileFields= {};
+        profileFields.user = req.user.id;
+        if (picture)    profileFields.picture = picture;
+
+
+        try{
+            let profile = await Profile.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: profileFields },
+                { new: true, upsert: true, setDefaultsOnInsert: true }
+              );        
+            return res.json(profile);
+        }catch(err){
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    }
+);
+
 
 
 // @route  GET api/profile

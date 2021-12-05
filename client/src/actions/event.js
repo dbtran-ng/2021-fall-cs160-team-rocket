@@ -39,7 +39,7 @@ export const updateEvent = (id, formData, history, edit = false) =>
         type: EDIT_EVENT,
         payload: res.data,
       });
-      dispatch(setAlert('Successfully Updated an Event', 'success'));
+      dispatch(setAlert('Successfully Updated Event', 'success'));
       history.push(`/event/${id}`);
     } catch (err) {
       dispatch({

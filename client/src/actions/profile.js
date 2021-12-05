@@ -56,6 +56,34 @@ export const createProfile = (formData, history, edit = false) => async (dispatc
     }
 };
 
+//upload picture
+export const uploadPicture = (formData, edit = false) => async (dispatch) => {
+    try {
+        const config ={
+            headers:
+            {
+                'Content-Type': 'application/json'
+            }
+        };
+        const res = await axios.post('/api/profile/upload', formData, config);
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        });
+        dispatch(setAlert(edit ? 'Updated Picture' : 'Added Picture', 'success'));
+    } catch (err) {
+        const errors = err.response.data.errors;
+        if (errors){
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        });
+    }
+};
+
+
 // get all profiles
 export const getProfiles = () => async dispatch => {
     dispatch({

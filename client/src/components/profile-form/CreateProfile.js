@@ -9,7 +9,7 @@ const UpdateProfile = ({ createProfile, history }) => {
     name: '',
     major: '',
     yearInSchool: '',
-    email: '',
+    picture: '',
     phone: '',
     location: '',
     skills: '',
@@ -21,10 +21,9 @@ const UpdateProfile = ({ createProfile, history }) => {
   });
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
   const {
-    name,
     major,
     yearInSchool,
-    email,
+    picture,
     phone,
     location,
     skills,
@@ -78,16 +77,6 @@ const UpdateProfile = ({ createProfile, history }) => {
               placeholder="Major"
               name="major"
               value={major}
-              onChange={(e) => onChange(e)}
-            />
-          </div>
-          <div className="form-group">
-            <small className="form-text">How can we reach you at?</small>
-            <input
-              type="text"
-              placeholder="Email"
-              name="email"
-              value={email}
               onChange={(e) => onChange(e)}
             />
           </div>

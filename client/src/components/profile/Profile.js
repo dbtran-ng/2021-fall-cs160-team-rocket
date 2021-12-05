@@ -1,20 +1,68 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Modal, Button, Form } from "react-bootstrap";
+import UploadPicture from '../profile-form/UploadPicture';
 import Spinner from '../layout/Spinner';
 import { getCurrentProfile } from '../../actions/profile';
 import { Link } from 'react-router-dom';
 import { getEvents } from '../../actions/event';
+import { getGroups } from '../../actions/group';
+
+const NAME_OF_UPLOAD_PRESET = 'insta-clone';
+const YOUR_CLOUDINARY_ID = 'dtnzg6l1i';
+
 const Profile = ({
   getCurrentProfile,
   getEvents,
+  getGroups,
   auth,
   profile: { profile, loading },
 }) => {
   useEffect(() => {
     getCurrentProfile();
     getEvents();
-  }, [getCurrentProfile, getEvents]);
+    getGroups();
+  }, [getCurrentProfile, getEvents, getGroups]);
+
+  //add profile picture
+  const [formData, setFormData] = useState({
+    avatar: '',
+  });
+  const { avatar } = formData;
+  const [imageUpload, setImageUpload] = useState(false);
+
+  const onImageChange = async (e) => {
+    const [file] = e.target.files;
+    if (!file) return;
+    setImageUpload(true);
+    const uploadedUrl = await uploadImage(file);
+    setFormData({ ...formData, avatar: uploadedUrl });
+    setImageUpload(false);
+  };
+
+  // A helper function
+  async function uploadImage(file) {
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', NAME_OF_UPLOAD_PRESET);
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${YOUR_CLOUDINARY_ID}/image/upload`,
+      {
+        method: 'POST',
+        body: data,
+      }
+    );
+    const img = await res.json();
+    console.log(img);
+    return img.secure_url;
+  }
+
+  // modal popup display
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const displayModal = () => setShowModal(true);
+
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -22,13 +70,23 @@ const Profile = ({
       <div className="profile">
         <div>
           <img
-            src={auth.user && auth.user.avatar}
+            src={auth.user && profile.picture}
             alt="avatar"
             className="round-img"
           />
+
           <div>
-            {' '}
-            <input type="file" onChange={(e) => {}} />{' '}
+            <Modal show={showModal} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Upload New Profile Picture</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <UploadPicture></UploadPicture>
+              </Modal.Body>
+            </Modal>
+            <button type="buttons my-3 mx-4" onClick={displayModal}>
+            <i class="fa fa-upload"></i> Upload Picture
+            </button>
           </div>
         </div>
         <div>
@@ -43,21 +101,21 @@ const Profile = ({
           </div>
         </div>
         <div>
-            <h2 className="text-primary">Hobbies</h2>
-            {profile.hobbies &&
-              profile.hobbies.map((hobby, index) => (
-                <div key={index} className="p-1">
-                  <i className="fas fa-check" /> {hobby}
-                </div>
-              ))}
-            <h2 className="text-primary">Skill Set</h2>
-            {profile.skills &&
-              profile.skills.map((skill, index) => (
-                <div key={index} className="p-1">
-                  <i className="fas fa-check" /> {skill}
-                </div>
-              ))}
-          </div>
+          <h2 className="text-primary">Hobbies</h2>
+          {profile.hobbies &&
+            profile.hobbies.map((hobby, index) => (
+              <div key={index} className="p-1">
+                <i className="fas fa-check" /> {hobby}
+              </div>
+            ))}
+          <h2 className="text-primary">Skill Set</h2>
+          {profile.skills &&
+            profile.skills.map((skill, index) => (
+              <div key={index} className="p-1">
+                <i className="fas fa-check" /> {skill}
+              </div>
+            ))}
+        </div>
       </div>
 
       <div className="event px-5">
@@ -66,6 +124,15 @@ const Profile = ({
           profile.events.map((e, index) => (
             <div key={index} className="p-1">
               <i className="fa fa-calendar-alt" /> {e.title}
+            </div>
+          ))}
+      </div>
+      <div className="event px-5">
+        <h4>List of Groups Participated</h4>
+        {profile.groups &&
+          profile.groups.map((e, index) => (
+            <div key={index} className="p-1">
+              <i className="fa fa-dot-circle" /> {e.title}
             </div>
           ))}
       </div>
@@ -83,12 +150,14 @@ Profile.propTypes = {
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   event: PropTypes.object.isRequired,
+  group: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   auth: state.auth,
   profile: state.profile,
   event: state.event,
+  group: state.group
 });
-export default connect(mapStateToProps, { getCurrentProfile, getEvents })(
+export default connect(mapStateToProps, { getCurrentProfile, getEvents, getGroups })(
   Profile
 );

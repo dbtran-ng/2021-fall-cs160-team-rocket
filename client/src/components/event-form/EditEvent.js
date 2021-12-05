@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Link, Redirect, withRouter, useParams } from 'react-router-dom';
+import { Link, withRouter, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateEvent, getEventById } from '../../actions/event';

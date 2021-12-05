@@ -28,6 +28,10 @@ const DashboardAction = () => {
             <Link to="/create-group" className="btn btn-light w-100">
               <i class="fa fa-users text-normal"></i> Create Groups
             </Link>
+            <Link to="/manage-group" className="btn btn-light w-100">
+              <i className="fa fa-calendar-alt text-normal"></i> Manage Your
+              Groups
+            </Link>
           </div>
         </div>
       </div>

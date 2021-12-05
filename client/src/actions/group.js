@@ -7,6 +7,7 @@ import {
   DELETE_GROUP,
   GROUP_ERROR,
   JOIN_GROUP,
+  UPDATE_GROUP,
 } from "./types";
 //add group
 export const addGroup = (formData) => async (dispatch) => {
@@ -24,6 +25,29 @@ export const addGroup = (formData) => async (dispatch) => {
     });
   }
 };
+// update group
+export const updateGroup = (id, formData, history, edit = false) =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const res = await axios.post(`/api/group/${id}`, formData, config);
+      dispatch({
+        type: UPDATE_GROUP,
+        payload: res.data,
+      });
+      dispatch(setAlert('Successfully Updated Group', 'success'));
+      history.push(`/group/${id}`);
+    } catch (err) {
+      dispatch({
+        type: GROUP_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  };
 // get group by ID
 export const getGroupById = (id) => async (dispatch) => {
   try {
@@ -56,6 +80,25 @@ export const getGroups = () => async (dispatch) => {
     });
   }
 };
+
+// get my events
+export const getMyGroups = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/group/me');
+
+    dispatch({
+      type: GET_GROUPS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GROUP_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+
 //join group
 export const joinGroup = (id) => async (dispatch) => {
   try {
