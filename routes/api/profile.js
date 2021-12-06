@@ -31,7 +31,6 @@ router.get('/me', auth, async (req,res) => {
 router.post('/',  
     auth,
     check('major', 'Major is required').notEmpty(),
-    check('location', 'Location is required').notEmpty(),
     check('skills', 'Skill is required').notEmpty(),
     check('hobbies', 'Hobby is required').notEmpty(),  
     async (req, res) =>{
@@ -42,42 +41,52 @@ router.post('/',
         }
 
         const {
-            name,
             major,
-            yearInSchool,
-            picture,
-            phone,
-            location,
             skills,
             hobbies,
             facebook,
             twitter,
             instagram,
-            linkedin
+            linkedin,
+            ...rest
         } = req.body;
 
-        const profileFields= {};
-        profileFields.user = req.user.id;
-        if (name)    profileFields.name = name;
-        if (major)    profileFields.major = major;
-        if (yearInSchool)    profileFields.yearInSchool = yearInSchool;
-        if (picture)    profileFields.picture = picture;
-        if (phone)    profileFields.phone = phone;
-        if (location)    profileFields.location = location;
+        // const profileFields= {};
+        // profileFields.user = req.user.id;
+        // if (major)    profileFields.major = major;
+        // if (yearInSchool)    profileFields.yearInSchool = yearInSchool;
+        // if (picture)    profileFields.picture = picture;
+        // if (phone)    profileFields.phone = phone;
+        // if (location)    profileFields.location = location;
 
-        if(skills){
-            profileFields.skills = skills.split(',').map(skill => skill.trim());
-        }
+        // if(skills){
+        //     profileFields.skills = skills.split(',').map(skill => skill.trim());
+        // }
 
-        if(hobbies){
-            profileFields.hobbies = hobbies.split(',').map(hobby => hobby.trim());
-        }
+        // if(hobbies){
+        //     profileFields.hobbies = hobbies.split(',').map(hobby => hobby.trim());
+        // }
+
+        const profileFields = {
+            user: req.user.id,
+            major,
+            skills: Array.isArray(skills)
+              ? skills
+              : skills.split(',').map((skill) => ' ' + skill.trim()),
+              hobbies: Array.isArray(hobbies)
+              ? hobbies
+              : hobbies.split(',').map((hobby) => ' ' + hobby.trim()),
+            ...rest
+          };
+
         // Build social object
-        profileFields.social = {};
+        
+        const socialFields = { twitter, instagram, linkedin, facebook };
+        profileFields.social = socialFields;
         if (twitter) profileFields.social.twitter = twitter;
         if (facebook) profileFields.social.facebook = facebook;
-        if (linkedin) profileFields.social.youtube = linkedin;
-        if (instagram) profileFields.social.youtube = instagram;
+        if (linkedin) profileFields.social.linkedin = linkedin;
+        if (instagram) profileFields.social.instagram = instagram;
         
         try{
             let profile = await Profile.findOneAndUpdate(

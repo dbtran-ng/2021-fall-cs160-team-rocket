@@ -10,6 +10,7 @@ const GroupItem = ({
     title,
     description,
     dateCreated,
+    posts,
     auth,
   },
 }) => {
@@ -25,7 +26,10 @@ const GroupItem = ({
             {description && <span>{description}</span>}
           </p>
           <Link to={`/group/${_id}`} className="btn btn-primary">
-            View Group Details
+            View Group Details{' '} 
+            {posts.length > 0 && (
+             <span className="comment-count">- {posts.length} Announcements</span>
+            )}
           </Link>
         </div>
       </div>

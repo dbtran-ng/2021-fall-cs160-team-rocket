@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import UploadPicture from '../profile-form/UploadPicture';
 import Spinner from '../layout/Spinner';
 import { getCurrentProfile } from '../../actions/profile';
@@ -29,34 +29,7 @@ const Profile = ({
   const [formData, setFormData] = useState({
     avatar: '',
   });
-  const { avatar } = formData;
-  const [imageUpload, setImageUpload] = useState(false);
 
-  const onImageChange = async (e) => {
-    const [file] = e.target.files;
-    if (!file) return;
-    setImageUpload(true);
-    const uploadedUrl = await uploadImage(file);
-    setFormData({ ...formData, avatar: uploadedUrl });
-    setImageUpload(false);
-  };
-
-  // A helper function
-  async function uploadImage(file) {
-    const data = new FormData();
-    data.append('file', file);
-    data.append('upload_preset', NAME_OF_UPLOAD_PRESET);
-    const res = await fetch(
-      `https://api.cloudinary.com/v1_1/${YOUR_CLOUDINARY_ID}/image/upload`,
-      {
-        method: 'POST',
-        body: data,
-      }
-    );
-    const img = await res.json();
-    console.log(img);
-    return img.secure_url;
-  }
 
   // modal popup display
   const [showModal, setShowModal] = useState(false);

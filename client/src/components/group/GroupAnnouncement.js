@@ -1,17 +1,16 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import formatDate from '../../utils/formatDate';
-import { deleteComment } from '../../actions/event';
+import { deletePost } from '../../actions/group';
 
-const CommentItem = ({
-  eventId,
-  comment: { _id, text, name, picture, user, date },
+const GroupAnnouncement = ({
+  groupId,
+  post: { _id, text, name, picture, user, date },
   auth,
-  deleteComment,
+  deletePost,
 }) => {
-
   return (
     <Fragment>
       <div className="post bg-white p-1 my-1">
@@ -26,10 +25,10 @@ const CommentItem = ({
           <p className="post-date">Posted on {formatDate(date)}</p>
           {!auth.loading && user === auth.user._id && (
             <button
-            onClick={() => {
-              deleteComment(eventId, _id);
-              window.location.reload(false);
-            }}
+              onClick={() => {
+                deletePost(groupId, _id);
+                window.location.reload(false);
+              }}
               type="button"
               className="btn btn-danger"
             >
@@ -42,11 +41,11 @@ const CommentItem = ({
   );
 };
 
-CommentItem.propTypes = {
-  commentId: PropTypes.string.isRequired,
-  comment: PropTypes.object.isRequired,
+GroupAnnouncement.propTypes = {
+  postId: PropTypes.string.isRequired,
+  post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  deleteComment: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -54,4 +53,4 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { deleteComment })(CommentItem);
+export default connect(mapStateToProps, { deletePost })(GroupAnnouncement);

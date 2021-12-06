@@ -5,7 +5,11 @@ import {
   DELETE_GROUP,
   UPDATE_GROUP,
   GROUP_ERROR,
-} from "../actions/types";
+  JOIN_GROUP,
+  DISJOIN_GROUP,
+  ADD_POST,
+  REMOVE_POST,
+} from '../actions/types';
 
 const initialState = {
   group: null,
@@ -37,10 +41,33 @@ export default function groupReducer(state = initialState, action) {
         groups: payload,
         loading: false,
       };
+    case JOIN_GROUP:
+    case DISJOIN_GROUP:
+      return {
+        ...state,
+        groups: state.groups.map((group) =>
+          group._id === payload.id
+            ? { ...group, listOfMembers: payload.listOfMembers }
+            : group
+        ),
+        loading: false,
+      };
     case GROUP_ERROR:
       return {
         ...state,
         error: payload,
+        loading: false,
+      };
+    case ADD_POST:
+      return {
+        ...state,
+        group: { ...state.group, posts: payload },
+        loading: false,
+      };
+    case REMOVE_POST:
+      return {
+        ...state,
+        group: state.group.posts.filter((post) => post._id !== payload),
         loading: false,
       };
     case DELETE_GROUP:

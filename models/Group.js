@@ -43,7 +43,7 @@ const GroupSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: "user",
+        ref: 'user',
       },
       text: {
         type: String,
@@ -52,7 +52,7 @@ const GroupSchema = new Schema({
       name: {
         type: String,
       },
-      avatar: {
+      picture: {
         type: String,
       },
       dateGroup: {
