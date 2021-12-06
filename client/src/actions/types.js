@@ -31,4 +31,7 @@ export const DELETE_GROUP = "DELETE_GROUP";
 export const GET_GROUP = "GET_GROUP";
 export const GET_GROUPS = "GET_GROUPS";
 export const JOIN_GROUP = "JOIN_GROUP";
+export const DISJOIN_GROUP = 'DISJOIN_GROUP';
 export const GROUP_ERROR = "GROUP_ERROR";
+export const ADD_POST = 'ADD_POST';
+export const REMOVE_POST = 'REMOVE_POST';

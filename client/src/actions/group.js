@@ -7,6 +7,9 @@ import {
   DELETE_GROUP,
   GROUP_ERROR,
   JOIN_GROUP,
+  DISJOIN_GROUP,
+  ADD_POST,
+  REMOVE_POST,
   UPDATE_GROUP,
 } from "./types";
 //add group
@@ -81,7 +84,7 @@ export const getGroups = () => async (dispatch) => {
   }
 };
 
-// get my events
+// get my groups
 export const getMyGroups = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/group/me');
@@ -105,7 +108,7 @@ export const joinGroup = (id) => async (dispatch) => {
     const res = await axios.put(`/api/group/join/${id}`);
     dispatch({
       type: JOIN_GROUP,
-      payload: { id, listMembers: res.data },
+      payload: { id, listOfMembers: res.data },
     });
   } catch (err) {
     dispatch({
@@ -114,6 +117,23 @@ export const joinGroup = (id) => async (dispatch) => {
     });
   }
 };
+
+// cancel join group
+export const disjoinGroup = (id) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/group/join/cancel/${id}`);
+    dispatch({
+      type: DISJOIN_GROUP,
+      payload: { id, listOfMembers: res.data },
+    });
+  } catch (err) {
+    dispatch({
+      type: GROUP_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
 // delete Group By Id
 export const deleteGroupById = (id) => async (dispatch) => {
   try {
@@ -128,6 +148,45 @@ export const deleteGroupById = (id) => async (dispatch) => {
     dispatch({
       type: GROUP_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+
+// Add comment
+export const addPost = (groupId, formData) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/group/post/${groupId}`, formData);
+
+    dispatch({
+      type: ADD_POST,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Announcement Added', 'success'));
+  } catch (err) {
+    dispatch({
+      type: GROUP_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Delete comment
+export const deletePost = (groupId, postId) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/group/post/${groupId}/${postId}`);
+
+    dispatch({
+      type: REMOVE_POST,
+      payload: postId
+    });
+
+    dispatch(setAlert('Announcement Removed', 'success'));
+  } catch (err) {
+    dispatch({
+      type: GROUP_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 };

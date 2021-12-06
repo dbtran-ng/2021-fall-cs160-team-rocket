@@ -1,8 +1,23 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { createProfile, getCurrentProfile } from "../../actions/profile";
+import React, { Fragment, useState, useEffect } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
+
+const initialState = {
+  name: '',
+  major: '',
+  yearInSchool: '',
+  picture: '',
+  phone: '',
+  location: '',
+  skills: '',
+  hobbies: '',
+  twitter: '',
+  facebook: '',
+  linkedin: '',
+  instagram: '',
+};
 
 const EditProfile = ({
   createProfile,
@@ -10,51 +25,38 @@ const EditProfile = ({
   getCurrentProfile,
   history,
 }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    major: "",
-    yearInSchool: "",
-    email: "",
-    phone: "",
-    location: "",
-    skills: "",
-    hobbies: "",
-    facebook: "",
-    twitter: "",
-    instagram: "",
-    linkedin: "",
-  });
+  const [formData, setFormData] = useState(initialState);
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   useEffect(() => {
-    getCurrentProfile();
-    setFormData({
-      name: loading || !profile.name ? '' : profile.name,
-      major: loading || !profile.major ? '' : profile.major,
-      yearInSchool: loading || !profile.yearInSchool ? '' : profile.yearInSchool,
-      email: loading || !profile.email ? '' : profile.email,
-      phone: loading || !profile.phone ? '' : profile.phone,
-      location: loading || !profile.location ? '' : profile.location,
-      skills: loading || !profile.skills ? '' : profile.skills.join(','),
-      hobbies: loading || !profile.hobbies ? '' : profile.hobbies.join(','),
-      facebook: loading || !profile.social.facebook ? '' : profile.social.facebook,
-      twitter: loading || !profile.social.twitter ? '' : profile.social.twitter,
-      instagram: loading || !profile.social.instagram ? '' : profile.social.instagram,
-      linkedin: loading || !profile.social.linkedin ? '' : profile.social.linkedin,
-    });
-  }, [loading,getCurrentProfile]);
+    if (!profile) getCurrentProfile();
+    if (!loading && profile) {
+      const profileData = { ...initialState };
+      for (const key in profile) {
+        if (key in profileData) profileData[key] = profile[key];
+      }
+      for (const key in profile.social) {
+        if (key in profileData) profileData[key] = profile.social[key];
+      }
+      // the skills may be an array from our API response
+      if (Array.isArray(profileData.skills))
+        profileData.skills = profileData.skills.join(', ');
+      // set local state with the profileData
+      setFormData(profileData);
+    }
+  }, [loading, getCurrentProfile, profile]);
+
   const {
     major,
     yearInSchool,
-    email,
     phone,
     location,
     skills,
     hobbies,
-    facebook,
     twitter,
-    instagram,
+    facebook,
     linkedin,
+    instagram,
   } = formData;
 
   const onChange = (e) =>
@@ -222,6 +224,8 @@ const EditProfile = ({
 
 EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

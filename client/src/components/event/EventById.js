@@ -113,7 +113,6 @@ const EventById = ({ getEventById, joinEvent, disjoinEvent, event: { event }, au
   );
 };
 EventById.propTypes = {
-  getProfileById: PropTypes.func.isRequired,
   joinEvent: PropTypes.func.isRequired,
   disjoinEvent: PropTypes.func.isRequired,
   event: PropTypes.object.isRequired,

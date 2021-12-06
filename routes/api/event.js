@@ -36,7 +36,6 @@ router.post(
         description: req.body.description,
         dateEvent: req.body.dateEvent,
         name: user.name,
-        avatar: user.avatar,
         user: req.user.id,
       });
       const event = await newEvent.save();
