@@ -246,6 +246,12 @@ img {
   margin-left: 50px;
 }
 
+.round-img-comment {
+  border-radius: 50%;
+  width: 50%;
+  margin-bottom: 10px;
+}
+
 .line {
   height: 1px;
   background: #ccc;

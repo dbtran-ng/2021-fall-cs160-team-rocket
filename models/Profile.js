@@ -7,6 +7,7 @@ const ProfileSchema = new mongoose.Schema({
   },
   name: {
     type: String,
+    ref: 'user.name'
   },
   major: {
     type: String,
@@ -15,8 +16,9 @@ const ProfileSchema = new mongoose.Schema({
   yearInSchool: {
     type: String,
   },
-  email: {
+  picture: {
     type: String,
+    default: 'https://res.cloudinary.com/dtnzg6l1i/image/upload/v1638740334/nfokyod7n7llwdr1xvtq.jpg',
   },
   phone: {
     type: String,
@@ -38,8 +40,13 @@ const ProfileSchema = new mongoose.Schema({
   ],
   groups: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'group',
+      group: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'group',
+      },
+      title: {
+        type: String,
+      },
     },
   ],
   skills: {

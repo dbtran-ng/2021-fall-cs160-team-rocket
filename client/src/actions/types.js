@@ -20,7 +20,10 @@ export const DELETE_EVENT = 'DELETE_EVENT';
 export const GET_EVENT = 'GET_EVENT';
 export const GET_EVENTS = 'GET_EVENTS';
 export const JOIN_EVENT = 'JOIN_EVENT';
+export const DISJOIN_EVENT = 'DISJOIN_EVENT';
 export const EVENT_ERROR = 'EVENT_ERROR';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 
 export const ADD_GROUP = "ADD_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";

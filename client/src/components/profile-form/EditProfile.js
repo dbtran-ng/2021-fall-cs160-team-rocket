@@ -37,14 +37,13 @@ const EditProfile = ({
       location: loading || !profile.location ? '' : profile.location,
       skills: loading || !profile.skills ? '' : profile.skills.join(','),
       hobbies: loading || !profile.hobbies ? '' : profile.hobbies.join(','),
-      facebook: loading || !profile.facebook ? '' : profile.facebook,
-      twitter: loading || !profile.twitter ? '' : profile.twitter,
-      instagram: loading || !profile.instagram ? '' : profile.instagram,
-      linkedin: loading || !profile.linkedin ? '' : profile.linkedin,
+      facebook: loading || !profile.social.facebook ? '' : profile.social.facebook,
+      twitter: loading || !profile.social.twitter ? '' : profile.social.twitter,
+      instagram: loading || !profile.social.instagram ? '' : profile.social.instagram,
+      linkedin: loading || !profile.social.linkedin ? '' : profile.social.linkedin,
     });
   }, [loading,getCurrentProfile]);
   const {
-    name,
     major,
     yearInSchool,
     email,
@@ -102,16 +101,6 @@ const EditProfile = ({
               placeholder="Edit Major"
               name="major"
               value={major}
-              onChange={(e) => onChange(e)}
-            />
-          </div>
-          <div className="form-group">
-            <small className="form-text">Email</small>
-            <input
-              type="text"
-              placeholder="Edit Email"
-              name="email"
-              value={email}
               onChange={(e) => onChange(e)}
             />
           </div>

@@ -38,14 +38,14 @@ const EventSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user',
       },
+      picture: {
+        type: String
+      },
       text: {
         type: String,
         required: true,
       },
       name: {
-        type: String,
-      },
-      avatar: {
         type: String,
       },
       dateComment: {

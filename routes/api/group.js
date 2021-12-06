@@ -47,6 +47,52 @@ router.post(
     }
   }
 );
+
+
+// @route  POST api/group/:id
+// @test   Edit a group
+// @access Private
+router.post(
+  '/:id',
+  [
+    auth,
+    [
+      check('title', 'Title is required').not().isEmpty(),
+      check('topic', 'Topic is required').not().isEmpty(),
+      check('description', 'Description is required').not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const {
+      title,
+      topic,
+      description,
+  } = req.body;
+  console.log(req.params.id);
+  const groupFields= {};
+  groupFields.group = req.params.id;
+  if (title)    groupFields.title = title;
+  if (topic)    groupFields.topic = topic;
+  if (description)    groupFields.description = description;
+    try {
+      let group = await Group.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: groupFields },
+        { new: true, upsert: true, setDefaultsOnInsert: true }
+      )
+      return res.json(group);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+
 // @route  GET api/group
 // @test   GET all groups
 // @access Private
@@ -57,6 +103,22 @@ router.get("/", auth, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
+  }
+});
+
+// @route  GET api/event/me
+// @test   GET my events
+// @access Private
+router.get('/me', auth, async (req, res) => {
+  try {
+    const groups = await Group.find({user: req.user.id}).sort({ date: -1 });
+    if (!groups){
+      return res.status(400).json({msg: 'No events for this user'});
+  }
+    return res.json(groups);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 });
 
@@ -171,18 +233,20 @@ router.delete("/post/:id/:post_id", auth, async (req, res) => {
 router.put("/join/:id", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
+    const profile = await Profile.findOne({user: req.user.id}).populate('user',['name','avatar']);
+    if (!profile){
+      return res.status(400).json({msg: 'Profile not found'});
+    }
     const group = await Group.findById(req.params.id);
     // check if user already joined this event
-    if (
-      group.listOfMembers.some(
-        (member) => member.user.toString() === req.user.id
-      )
-    ) {
-      return res.status(400).json({ msg: "This user has joined this Group" });
+    if ( group.listOfMembers.some((member) => member.user.toString() === req.user.id)){
+      return res.status(400).json({msg: 'This user has joined this Event'});
     }
 
     group.listOfMembers.unshift({ user: req.user.id, name: user.name });
+    profile.groups.unshift({group: group.id, title: group.title});
     await group.save();
+    await profile.save();
 
     return res.json(group.listOfMembers);
   } catch (err) {

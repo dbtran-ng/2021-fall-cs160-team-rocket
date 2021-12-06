@@ -22,7 +22,11 @@ import EventById from "./components/event/EventById";
 import EventByMe from "./components/event/EventByMe";
 import Groups from "./components/group/Groups";
 import AddGroup from "./components/group-form/AddGroup";
+import EditGroup from "./components/group-form/EditGroup";
 import GroupById from "./components/group/GroupById";
+import GroupManage from "./components/group/GroupManage";
+import GroupByMe from "./components/group/GroupByMe";
+
 import { loadUser } from "./actions/auth";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -67,7 +71,10 @@ const App = () => {
             <PrivateRoute exact path='/manage-event/:id' component={EventByMe} />
             <PrivateRoute exact path="/group" component={Groups} />
             <PrivateRoute exact path="/create-group" component={AddGroup} />
+            <PrivateRoute exact path="/edit-group/:id" component={EditGroup} />
             <PrivateRoute exact path="/group/:id" component={GroupById} />
+            <PrivateRoute exact path='/manage-group' component={GroupManage} />
+            <PrivateRoute exact path='/manage-group/:id' component={GroupByMe} />
           </Switch>
         </section>
       </Fragment>  

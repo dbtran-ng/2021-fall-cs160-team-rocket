@@ -23,8 +23,8 @@ const GroupById = ({ getGroupById, joinGroup, group: { group }, auth }) => {
           </Link>
           {auth.isAuthenticated &&
             auth.loading === false &&
-            auth.user._id === group.user._id && (
-              <Link to="/edit-group" className="btn editButton">
+            auth.user._id === group.user && (
+              <Link to={`/edit-group/${group._id}`} className="btn editButton">
                 Edit Group
               </Link>
             )}
@@ -38,12 +38,6 @@ const GroupById = ({ getGroupById, joinGroup, group: { group }, auth }) => {
                 <p className="mt-4">
                   <span style={{ fontStyle: "italic" }}>Topic: </span>
                   {group.topic && <span>{group.topic}</span>}
-                </p>
-                <p>
-                  <span style={{ fontStyle: "italic" }}>Date: </span>{" "}
-                  {group.dateGroup && (
-                    <span>{formatDate(group.dateGroup)}</span>
-                  )}
                 </p>
                 <p>
                   <span style={{ fontStyle: "italic" }}>Description: </span>
@@ -87,7 +81,6 @@ const GroupById = ({ getGroupById, joinGroup, group: { group }, auth }) => {
   );
 };
 GroupById.propTypes = {
-  getProfileById: PropTypes.func.isRequired,
   joinGroup: PropTypes.func.isRequired,
   group: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
