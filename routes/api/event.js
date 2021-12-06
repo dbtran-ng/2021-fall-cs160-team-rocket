@@ -185,13 +185,14 @@ router.post('/comment/:id', [
   
       try {
         const user = await User.findById(req.user.id).select('-password');
+        const profile = await Profile.findOne({user: req.user.id}).populate('user',['name','picture']);
         const event = await Event.findById(req.params.id);
-  
+
         const newComment = {
           text: req.body.text,
           name: user.name,
-          avatar: user.avatar,
           user: req.user.id,
+          picture: profile.picture
         };
   
         event.comments.unshift(newComment);
@@ -240,7 +241,7 @@ router.post('/comment/:id', [
   router.put('/join/:id', auth, async (req,res) =>{
     try {
       const user = await User.findById(req.user.id).select('-password');
-      const profile = await Profile.findOne({user: req.user.id}).populate('user',['name','avatar']);
+      const profile = await Profile.findOne({user: req.user.id}).populate('user',['name','picture']);
       if (!profile){
         return res.status(400).json({msg: 'Profile not found'});
       }

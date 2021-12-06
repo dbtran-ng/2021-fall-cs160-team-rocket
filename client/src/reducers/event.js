@@ -6,6 +6,9 @@ import {
   EDIT_EVENT,
   EVENT_ERROR,
   JOIN_EVENT,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+  DISJOIN_EVENT
 } from "../actions/types";
 
 const initialState = {
@@ -39,6 +42,7 @@ export default function eventReducer(state = initialState, action) {
         loading: false,
       };
     case JOIN_EVENT:
+    case DISJOIN_EVENT:
       return {
         ...state,
         events: state.events.map((event) =>
@@ -54,6 +58,20 @@ export default function eventReducer(state = initialState, action) {
         error: payload,
         loading: false,
       };
+    case ADD_COMMENT:
+      return{
+        ...state,
+        event: {...state.event, comments: payload},
+        loading: false
+      }
+    case REMOVE_COMMENT:
+      return{
+        ...state,
+        event: state.event.comments.filter(
+          (comment) => comment._id !== payload
+        ),
+        loading: false
+      }
     case DELETE_EVENT:
       return {
         ...state,

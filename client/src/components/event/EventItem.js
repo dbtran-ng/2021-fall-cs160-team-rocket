@@ -10,6 +10,7 @@ const EventItem = ({
     title,
     description,
     dateCreated,
+    comments,
     auth,
   },
 }) => {
@@ -25,7 +26,10 @@ const EventItem = ({
             {description && <span>{description}</span>}
           </p>
           <Link to={`/event/${_id}`} className="btn btn-primary">
-            View Event Details
+            View Event Details{' '}
+            {comments.length > 0 && (
+              <span className="comment-count">{comments.length}</span>
+            )}
           </Link>
         </div>
       </div>

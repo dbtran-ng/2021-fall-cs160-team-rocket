@@ -1,12 +1,14 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getEventById, joinEvent } from '../../actions/event';
+import { getEventById, joinEvent, disjoinEvent } from '../../actions/event';
 import Spinner from '../layout/Spinner';
 import { Link, useParams } from 'react-router-dom';
 import formatDate from '../../utils/formatDate';
+import CommentForm from '../event-form/CommentForm';
+import EventComment from '../event/EventComment';
 
-const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
+const EventById = ({ getEventById, joinEvent, disjoinEvent, event: { event }, auth }) => {
   const { id } = useParams();
   useEffect(() => {
     getEventById(id);
@@ -28,7 +30,7 @@ const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
                 Edit Event
               </Link>
             )}
-          <div className="bg-light">
+          <div className="bg-light my-3">
             <div className="event">
               <div>
                 <h2>{event.title}</h2>
@@ -47,7 +49,11 @@ const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
                 </p>
                 <p>
                   <span style={{ fontStyle: 'italic' }}>Description: </span>
-                  {event.description && <span style={{ textTransform: 'uppercase'}}>{event.description}</span>}
+                  {event.description && (
+                    <span style={{ textTransform: 'uppercase' }}>
+                      {event.description}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -62,8 +68,33 @@ const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
               >
                 Join
               </button>
+              <button
+                onClick={() => {
+                  disjoinEvent(id);
+                  window.location.reload(false);
+                }}
+                type="button"
+                className="btn btn-primary"
+              >
+                Quit Join
+              </button>
             </div>
           </div>
+          
+          <CommentForm eventId={event._id} />
+            {event.comments !== null ? (
+                event.comments.map((comment) => (
+                  <EventComment
+                  key={comment._id}
+                  comment={comment}
+                  eventId={event._id}
+                />
+                ))
+              ) : (
+                <h4>No Comments Yet</h4>
+              )}
+
+      
           <h2 className="mt-4">List of Members has joined with us</h2>
           <div className="col-6">
             {event.listMembers.map((member, index) => (
@@ -84,6 +115,7 @@ const EventById = ({ getEventById, joinEvent, event: { event }, auth }) => {
 EventById.propTypes = {
   getProfileById: PropTypes.func.isRequired,
   joinEvent: PropTypes.func.isRequired,
+  disjoinEvent: PropTypes.func.isRequired,
   event: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -92,4 +124,4 @@ const mapStateToProps = (state) => ({
   event: state.event,
   auth: state.auth,
 });
-export default connect(mapStateToProps, { getEventById, joinEvent })(EventById);
+export default connect(mapStateToProps, { getEventById, joinEvent, disjoinEvent })(EventById);
