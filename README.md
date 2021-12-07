@@ -29,7 +29,9 @@
 ## Prerequisites
 
 Tools: VSCode, Terminal, Redux Extension on Chrome Browser
+
 Technology: NodeJS, ExpressJS, React, MongoDB
+
 Language: Javascript, HTML, CSS
 
 ## Set up Development Environment
