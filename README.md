@@ -82,6 +82,13 @@ We use Branching on Github to check out code from other members and easily merge
 - To test for - Sign up fail - user existed, run “node registerTest.js”
 - To test for the new user, in the tests/registerTest.js, the information should be changed in order to create new user
 
+## Build and Run in Docker Container
+    docker build -t spartanmeetup:<tag> -f docker/Dockerfile
+    
+    docker run -d -p 80:3000 spartanmeetup:<tag> 
+    
+- Where <tag> is the version number with built date - Example: v20211206
+
 ## User Guides
 
 1. Get started to use our Spartan Meetup by registering a new account ending with @sjsu.edu - we will add verification code sending to SJSU email. Therefore, only SJSU students, who have access to SJSU email, are able to use this Website.
