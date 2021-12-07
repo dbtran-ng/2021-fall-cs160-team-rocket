@@ -26,6 +26,11 @@
 ![groups](https://user-images.githubusercontent.com/70964027/144965678-7275dde7-6dd5-4ea0-b6f1-1204b35c0ad6.png)
 ![post](https://user-images.githubusercontent.com/70964027/144965681-bd69c178-88fb-4613-aec1-8201a25d4b20.png)
 
+## Prerequisites
+
+Tools: VSCode, Terminal, Redux Extension on Chrome Browser
+Technology: NodeJS, ExpressJS, React, MongoDB
+Language: Javascript, HTML, CSS
 
 ## Set up Development Environment
 
@@ -45,7 +50,9 @@ OR
 5. Set up Front-end - client folder: npx create-react-app client
 6. cd client => npm i axios react-router-dom redux react-redux react-bootstrap redux-thunk redux-devtools-extension
 7. npm i uuid => import {v4 as uuid} from 'uuid' and use by calling uuid()
-8. To fix any npm scripts, go to the package.json file. Please checkout our package.json file to see how we fix to get back-end and front-end running concurrently
+8. To fix any npm scripts, go to the package.json file in the root folder. Please checkout our package.json file to see how we fix to get back-end and front-end running concurrently
+9. To see libraries we are using to develop this website, go to /client/package. json
+
 
 c.  For MongoDB database:
 1. Set up MongoDB: https://www.mongodb.com to create a new account or you can use the default MongoDB to get started to use the website - however, you cannot modify the database when you will not have access to our MongoDB account.
